@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+    <title>Infobutton Example</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- the custom syle sheet -->
+    <link rel="stylesheet" href="css/custom.css">
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <h4>Loading... Page will redirect shortly</h4>
+      </div>
+    </div>
+
+    <!-- load various javacript libraries last -->
+
+    <!-- Latest compiled and minified JavaScript external libraries-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="external/underscore_1_8_3/underscore-min.js"></script>
+    <script src="external/backbone_1_2_3/backbone-min.js"></script>
+
+    <!-- The FHIR JavaScript client -->
+    <script src="https://sandbox.hspconsortium.org/dstu2/fhir-client/fhir-client.js"></script>
+
+    <!-- our custom JavaScript -->
+    <script>
+      FHIR.oauth2.authorize({
+        "client_id": "my_web_app",
+        "scope":  "patient/*.read"
+      });
+    </script>
+  </body>
+</html>

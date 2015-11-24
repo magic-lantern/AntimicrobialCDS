@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+    <title>Infobutton Example</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- the custom syle sheet -->
+    <link rel="stylesheet" href="css/custom.css">
+  </head>
+  <body>
+
+  <div id="infoModal"></div>
+
+    <div id="aboutModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Bacterial disease diagnosis and medication guide</h4>
+            <p>Based on <a href="https://intermountainhealthcare.org/ext/Dcmnt?ncid=522927223">Acute Otitis Media Care Process Model</a> updated September 2013</p>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="col-md-6">
+                <div class="row">
+                  <h4>Select the image that most closely resembles the patient's inner ear</h4>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <img src="images/bacterial_infection.jpg" alt="Acute otitis media" class="img-circle img-responsive selectedimage">
+                  </div>
+                  <div class="col-md-6">
+                    <img src="images/no_antibiotic.jpg" alt="Otitis media with effusion" class="img-circle img-responsive">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="radio">
+                      <label>
+                        <h4>
+                          <input type="radio" name="meets" id="meetsRadios1" value="option1" checked>
+                          Meets the following
+                        </h4>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="radio">
+                      <label>
+                        <h4>
+                          <input type="radio" name="meets" id="meetsRadios2" value="option2">
+                          Does NOT meet the following
+                        </h4>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <p>Has cloudy yellow fluid in the middle ear space PLUS at least 1 of the following:</p>
+                  <ol>
+                    <li>Bulging ear drum</li>
+                    <li>Otorrhea</li>
+                    <li>Mild bulging with redness AND new pain</li>
+                  </ol>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="radio">
+                      <label>
+                        <h4>
+                          <input type="radio" name="severity" id="severityRadios1" value="option1">
+                          Severe AOM
+                        </h4>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="radio">
+                      <label>
+                        <h4>
+                          <input type="radio" name="severity" id="severityRadios2" value="option2" checked>
+                          Mild or Moderate AOM
+                        </h4>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <p>Severe Includes:</p>
+                  <ul>
+                    <li>Significant ear pain for > 48 hours OR</li>
+                    <li>Fever > 39&deg;C <span class="note">Current temp: 38&deg;C</span> OR</li>
+                    <li>Otorrhea</li>
+                  </ul>
+                </div>
+                <div class="row">
+                  <h4>Patient <span class="note">age 7</span> years old</h4>
+                </div>
+                <div class="row">
+                  <h4>Diagnostic Criteria for Acute Otitis Media requiring antibiotics <span class="note">not</span> met.</h4>
+                  <p>Recommend close follow-up but no antibiotics. <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Override</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Review and Sign</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <h1>Local Area Regional EHR</h1>
+    <div class="alert alert-info alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Please Wait </strong>- retrieving infobutton content.
+    </div>
+    <div class="alert alert-warning alert-dismissible hidden" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Warning </strong>- some infobutton content failed to load.
+    </div>
+    <button class="btn btn-info btn-sm headerbutton" data-toggle="modal" data-target="#aboutModal">About this page</button>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 border">
+          <div class="row zeroborder">
+          <h3>Patient Information</h3>
+          <dl class="dl-horizontal zeroborder">
+            <dt>Name</dt>
+            <dd>Patrick Smith</dd>
+            <dt>Age</dt>
+            <dd>57</dd>
+            <dt>Sex</dt>
+            <dd>Male</dd>
+            <dt>Address</dt>
+            <dd>123 Place Lane, USA</dd>
+          </dl>
+        </div>
+        <div class="row patientinfobutton">
+          <button class="btn btn-default pull-right" data-toggle="modal" data-target="#aboutModal">Modify</button>
+        </div>
+        <div class="row zeroborder">
+          <p class="lead">Recent Vitals</p>
+          <dl class="dl-horizontal zeroborder">
+            <dt>Weight</dt>
+            <dd>81.64 kg <span>Today</span></dd>
+            <dt>Blood Pressure</dt>
+            <dd>130/80 mmHg <span>Today</span></dd>
+            <dt>Heart Rate</dt>
+            <dd>85 bpm <span>Today</span></dd>
+          </dl>
+        </div>
+      </div>
+        <div class="col-md-6 border">
+          <h3>Reason for current visit</h3>
+          <p>Followup for pneumonia.</p>
+          <p class="lead">Recent Patient Notes</p>
+          <p><strong>Sept 1, 2015</strong> - Pat was admitted to Local Area Regional Hospital due to severe bacterial pneumonia. Due to complications with pneumonia and health conditions...</p>
+          <p><strong>Aug 1, 2015</strong> - Pat visited due to increasingly severe migraines. Prescribed additional medication to help alleviate pain</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5 border">
+          <button class="btn btn-default pull-right" data-toggle="modal" data-target="#aboutModal">Review</button>
+        </div>
+        <div class="col-md-6 border">
+          <button class="btn btn-default pull-right" data-toggle="modal" data-target="#aboutModal">Modify</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+          <h3>Problem List</h3>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+          <h3>Medications</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 bg-infolight-a">
+          <span>Hypertensive disorder
+            <div class="problembutton pull-right hidden" data-mainsearchcriteria_v_c="38341003" data-mainsearchcriteria_v_dn="Hypertensive disorder">
+              <em>i</em>
+            </div>
+          </span>
+        </div>
+        <div class="col-md-1 bg-infolight-a">
+          <p>&nbsp;</p>
+        </div>
+        <div class="col-md-5 bg-infolight-a">
+          <p><strong>Lisinopril</strong> 40 MG Oral Tablet</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 bg-infolight-a">
+          <p>&nbsp;</p>
+        </div>
+        <div class="col-md-1 bg-infolight-a">
+          <p>&nbsp;</p>
+        </div>
+        <div class="col-md-5 bg-infolight-a">
+          <p><strong>Diltiazem Hydrochloride</strong> 180 MG Extended Release Oral Tablet</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 bg-infolight-b">
+          <span>Transformed migraine
+            <div class="problembutton pull-right hidden" data-mainsearchcriteria_v_c="427419006" data-mainsearchcriteria_v_dn="Transformed migraine">
+              <em>i</em>
+            </div>
+          </span>
+        </div>
+        <div class="col-md-1 bg-infolight-b">
+          <p>&nbsp;</p>
+        </div>
+        <div class="col-md-5 bg-infolight-b">
+          <p><strong>Divalproex</strong> Sodium 300 MG</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 bg-infolight-a">
+          <span>Hypercholesterolemia
+            <div class="problembutton pull-right hidden" data-mainsearchcriteria_v_c="13644009" data-mainsearchcriteria_v_dn="Hypercholesterolemia">
+              <em>i</em>
+            </div>
+          </span>
+        </div>
+        <div class="col-md-1 bg-infolight-a">
+          <p>&nbsp;</p>
+        </div>
+        <div class="col-md-5 bg-infolight-a">
+          <p><strong>Simvastatin</strong> 40 MG [Zocor]</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+          <p class="lead">Non-Chronic</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 bg-infolight-b">
+          <span>Bacterial pneumonia
+            <div class="problembutton pull-right hidden" data-mainsearchcriteria_v_c="53084003" data-mainsearchcriteria_v_dn="Bacterial pneumonia">
+              <em>i</em>
+            </div>
+          </span>
+        </div>
+        <div class="col-md-1 bg-infolight-b">
+          <p>&nbsp;</p>
+        </div>
+        <div class="col-md-5 bg-infolight-b">
+          <p><strong>Levofloxacin</strong> 500 MG Oral Tablet</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <button class="btn btn-default pull-right topspacing" data-toggle="modal" data-target="#aboutModal">Modify</button>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-default pull-right topspacing" data-toggle="modal" data-target="#aboutModal">Modify</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+          <h3>Lab Results</h3>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+          <h3>Allergies</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 bg-infolight-a">
+          <span>
+            <strong>Triglycerides, Serum or Plasma</strong> 72 <span class="faded">Aug 12, 2015</span>
+            <div class="labbutton pull-right hidden" data-mainsearchcriteria_v_c="2571-8" data-mainsearchcriteria_v_dn="Triglycerides, Serum or Plasma">
+              <em>i</em>
+            </div>
+          </span>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 bg-infolight-b">
+          <p><strong>Penicillin</strong> Severe; anaphylactic reaction </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 bg-infolight-b">
+          <span>
+            <strong>Stat Gram Stain</strong> +1 - click review for more details <span class="faded">Yesterday</span>
+            <div class="labbutton pull-right hidden" data-mainsearchcriteria_v_c="664-3" data-mainsearchcriteria_v_dn="Stat Gram Stain">
+              <em>i</em>
+            </div>
+          </span>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <button class="btn btn-default pull-right topspacing" data-toggle="modal" data-target="#aboutModal">Review</button>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-default pull-right topspacing" data-toggle="modal" data-target="#aboutModal">Modify</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/template" id="problemViewTemplate">
+      <div class="modal fade" id="problemViewModal" tabindex="-1" role="dialog" aria-labelledby="problemViewLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="problemViewLabel"><%= mainsearchcriteria_v_dn %></h4>
+            </div>
+            <div class="modal-body">
+              <% if (feed[0].entry[0].summary == "undefined") { %>
+              <p class="lead">Patient Guidance</p>
+              <%= feed[0].entry[0].summary.value[0] %>
+              <% } %>
+              <p class="lead">Clinical Guidance:</p>
+              <ul>
+                <%
+                _.each(feed, function(feedItem) {
+                  _.each(feedItem.entry, function(entryItem) {
+                    _.each(entryItem.link, function(linkItem) {
+                      %>
+                      <li>
+                        <a href='<%= linkItem.href %>' target="_blank"><%= entryItem.title.value[0] || linkItem.title || linkItem.href %> from <%= getHostname(linkItem.href) %></a>
+                      </li>
+                  <%});
+                  });
+                });
+                %>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/template" id="labViewTemplate">
+      <div class="modal fade" id="labViewModal" tabindex="-1" role="dialog" aria-labelledby="labViewLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="labViewLabel"><%= mainsearchcriteria_v_dn %></h4>
+            </div>
+            <div class="modal-body">
+              <p class="lead">For more information go to:<p>
+              <%
+              _.each(feed, function(feedItem) { %>
+                <p>Data source: <%= feedItem.title.value[0] %></p>
+                  <%
+                _.each(feedItem.entry, function(entryItem) {
+                  _.each(entryItem.link, function(linkItem) {
+                    %>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<a href='<%= linkItem.href %>' target="_blank"><%= entryItem.title.value[0] || linkItem.title || linkItem.href %> from <%= getHostname(linkItem.href) %></a>
+                <%});
+                }); %>
+                <p>&nbsp;</p> <%
+              });
+              %>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+
+    <!-- load various javacript libraries last -->
+
+    <!-- Latest compiled and minified JavaScript external libraries-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="external/underscore_1_8_3/underscore-min.js"></script>
+    <script src="external/backbone_1_2_3/backbone-min.js"></script>
+
+    <!-- the custom javascript -->
+    <script src="js/models.js"></script>
+    <script src="js/views.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>

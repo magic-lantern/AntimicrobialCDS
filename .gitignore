@@ -1,0 +1,5 @@
+# dependencies
+/node_modules
+
+# OSX specific files
+.DS_Store
