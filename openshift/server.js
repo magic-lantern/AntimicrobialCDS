@@ -43,7 +43,7 @@ var SampleApp = function() {
         }
 
         //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./index.html');
+        self.zcache['index.html'] = fs.readFileSync('./public/index.html');
     };
 
 
@@ -95,15 +95,12 @@ var SampleApp = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
+        /*
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
+        */
     };
 
 
@@ -119,11 +116,9 @@ var SampleApp = function() {
         for (var r in self.routes) {
             self.app.get(r, self.routes[r]);
         }
-
-        ['css', 'js', 'external'].forEach(function (dir){
-            self.app.use('/'+dir, express.static(__dirname+'/'+dir));
-        });
-
+        console.log((__dirname+'/public'));
+        //self.app.use('/'+dir, express.static(__dirname+'/'+dir));
+        self.app.use('/', express.static(__dirname+'/public'));
     };
 
 
