@@ -17,9 +17,11 @@
   <body>
     {{content-for 'body'}}
 
+    {{content-for 'body-footer'}}
+
+    <script src="https://sandbox.hspconsortium.org/dstu2/fhir-client/fhir-client.js"></script>
     <script src="assets/vendor.js"></script>
     <script src="assets/antimicrobial-cds.js"></script>
 
-    {{content-for 'body-footer'}}
   </body>
 </html>

@@ -1,0 +1,80 @@
+.dl-horizontal dt {
+  width: 110px;
+}
+.dl-horizontal dd {
+  margin-left: 120px;
+}
+.problembutton, .labbutton {
+  font-family: Georgia, serif;
+  font-size: 2rem;
+  line-height: 1rem;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  padding: 6px;
+  background: #337ab7;
+  border: 2px solid #2e6da4;
+  color: #FFF;
+  text-align: center;
+  cursor: pointer;
+}
+.headerbutton {
+  position: absolute;
+  right: 3vw;
+  top: 3vh;
+}
+span {
+  display: block;
+  margin-bottom: 10px;
+}
+.bg-infolight-a {
+  background-color: #eef7fb;
+}
+.bg-infolight-b {
+  background-color: #fbf2ee;
+}
+.topspacing {
+  margin-top: 1rem;
+}
+dd > span, .faded {
+  color: #AAA;
+  display: inline;
+  margin-bottom: 0;
+
+}
+.lead {
+  margin-bottom: 10px;
+}
+.test {
+  margin-left: 7.2%;
+}
+.alert {
+  position: absolute;
+  left: 40vw;
+  top: 1vh;
+  width: 38rem;
+  height: 5rem;
+  dline-height: 1.5rem;
+  margin-bottom: 0;
+  dz-index: -1;
+}
+.patientinfobutton {
+  margin-right: 100px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.zeroborder {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+.note {
+  display: inline;
+  color: red;
+}
+.modal-dialog {
+  width: 625px;
+}
+.selectedimage {
+  border: 6px solid blue;
+}

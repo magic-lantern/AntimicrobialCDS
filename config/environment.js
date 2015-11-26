@@ -16,6 +16,10 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+      // snomed-ct codes used to fire the Acute Otitis Media and related cases CDS logic
+      aom_cds: ['3110003','65363002'],
+      // snomed-ct codes used to fire the Streptococcal Pharyngitis and related cases CDS logic
+      strep_cds: ['43878008','1532007']
     }
   };
 
