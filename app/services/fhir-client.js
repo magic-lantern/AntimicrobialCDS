@@ -27,9 +27,12 @@ export default Ember.Service.extend({
           console.log("Patient: ", p);
           var name = p.name[0];
           self.patient.formatted_name = name.given.join(" ") + " " + name.family;
-          self.patient.formatted_address = p.address[0].line[0] + ', ' + p.address[0].city;
+          self.patient.formatted_address = p.address[0].line[0] + ', ' + p.address[0].city + ', ' + p.address[0].state;
           self.readWeight();
           self.readTemp();
+
+          // for testing loading message
+          //setTimeout(function() { self.set('isLoading', false); }, 5000);
           self.set('isLoading', false);
         });
       });
@@ -41,7 +44,7 @@ export default Ember.Service.extend({
   },
   readWeight: function() {
     var self = this;
-    self.patient.weight = {};
+    self.patient.weight = {value: 'No Observation'};
     this.patientContext.Observation
       .where
       .code("3141-9")
@@ -63,7 +66,7 @@ export default Ember.Service.extend({
   },
   readTemp: function() {
     var self = this;
-    self.patient.temp = {};
+    self.patient.temp = {value: 'No Observation'};
     this.patientContext.Observation
       .where
       .code("8310-5")

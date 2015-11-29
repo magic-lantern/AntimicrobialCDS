@@ -1,35 +1,18 @@
-{{#if fc.isLoading}}
-  <div class="alert alert-info" role="alert">Loading Application</div>
+{{#unless fc.isAuthenticated}}
+  <div class="alert alert-danger" role="alert">
+    <p class="bg-danger">Patient Context not loaded or not Authenticated, app will not function.</p>
+  </div>
+  {{launch-instructions}}
 {{else}}
-  {{#if fc.isAuthenticated}}
-    <h4>Patient Context loaded and Authentication has succeeded</h4>
-  {{else}}
-    <div class="alert alert-danger" role="alert">
-      <p class="bg-danger">Patient Context not loaded or not Authenticated, app will not function.</p>
-    </div>
-    <p>To use the applciation, please do the following:</p>
-    <ol>
-      <li>Open <a href="https://sandbox.hspconsortium.org/dstu2/demo">HSPC DSTU2 Sandbox: https://sandbox.hspconsortium.org/dstu2/demo</a></li>
-      <li>Select sign in the upper right as shown in this image below:
-        <img class="img-responsive img-rounded" src="images/start.png">
-      </li>
-      <li>Use username of "demo" and password of "demo" – or setup your own account.
-        <img class="img-responsive img-rounded" src="images/login.png">
-      </li>
-      <li>Select desired patient:
-        <img class="img-responsive img-rounded" src="images/patient_selection.png">
-      </li>
-      <li>In the App_ID field, type "bmi6300_antimicrobial" and in the Launch URL field, type "http://cds-magiclantern.rhcloud.com/launch.html"
-        <img class="img-responsive img-rounded" src="images/application_launch.png">
-      </li>
-      <li>You will then be redirected to the OpenID application authorization page to allow a
-        single sign on token to be created. Select the desired time and click "Approve".
-        <img class="img-responsive img-rounded" src="images/openID_approval.png">
-      </li>
-      <li>If you want to revoke the single sign on token visit this page:
-        <a href="https://sandbox.hspconsortium.org/dstu2/hsp-reference-authorization/manage/user/approved">Manage Approved Sites: https://sandbox.hspconsortium.org/dstu2/hsp-reference-authorization/manage/user/approved</a>
-      </li>
-    </ol>
+  <h4>Patient Context loaded and Authentication has succeeded</h4>
+  {{#if fc.isLoading}}
+    <div class="alert alert-info" role="alert">Loading Application...</div>
   {{/if}}
-{{/if}}
+  <br/>
+  <br/>
+  <button id="instructions-button" class="btn btn-default" {{action 'showinstructions'}}>View HSPC Instructions</button>
+  <div class="hidden" id="instructions">
+    {{launch-instructions}}
+  </div>
+{{/unless}}
 {{outlet}}
