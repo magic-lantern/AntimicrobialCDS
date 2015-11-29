@@ -9,6 +9,7 @@ FHIR.oauth2.ready(function (fhirClient) {
       var formatted = name.given.join(" ") + " " + name.family;
       $("#patientName").text(formatted);
   });
+
 /*
 // return the first 100 observations
 patient.Observation

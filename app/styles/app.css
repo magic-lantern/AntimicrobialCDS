@@ -23,7 +23,7 @@
   right: 3vw;
   top: 3vh;
 }
-span {
+span .patientspan {
   display: block;
   margin-bottom: 10px;
 }
@@ -48,16 +48,6 @@ dd > span, .faded {
 .test {
   margin-left: 7.2%;
 }
-.alert {
-  position: absolute;
-  left: 40vw;
-  top: 1vh;
-  width: 38rem;
-  height: 5rem;
-  dline-height: 1.5rem;
-  margin-bottom: 0;
-  dz-index: -1;
-}
 .patientinfobutton {
   margin-right: 100px;
   margin-top: 0;
@@ -77,4 +67,13 @@ dd > span, .faded {
 }
 .selectedimage {
   border: 6px solid blue;
+}
+.img-rounded {
+  border: 3px solid #B0B0B0;
+  margin: 1rem;
+}
+.navcontent {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-right: 1rem;
 }

@@ -5,27 +5,23 @@
       <h3>Patient Information</h3>
       <dl class="dl-horizontal zeroborder">
         <dt>Name</dt>
-        <dd>Patrick Smith</dd>
-        <dt>Age</dt>
-        <dd>57</dd>
+        <dd>{{fc.patient.formatted_name}}
+        </dd>
+        <dt>Birth Date</dt>
+        <dd>{{fc.patient.birthDate}}</dd>
         <dt>Sex</dt>
-        <dd>Male</dd>
+        <dd>{{fc.patient.gender}}</dd>
         <dt>Address</dt>
-        <dd>123 Place Lane, USA</dd>
+        <dd>{{fc.patient.formatted_address}}</dd>
       </dl>
-    </div>
-    <div class="row patientinfobutton">
-      <button class="btn btn-default pull-right" data-toggle="modal" data-target="#aboutModal">Modify</button>
     </div>
     <div class="row zeroborder">
       <p class="lead">Recent Vitals</p>
       <dl class="dl-horizontal zeroborder">
         <dt>Weight</dt>
-        <dd>81.64 kg <span>Today</span></dd>
-        <dt>Blood Pressure</dt>
-        <dd>130/80 mmHg <span>Today</span></dd>
-        <dt>Heart Rate</dt>
-        <dd>85 bpm <span>Today</span></dd>
+        <dd>{{fc.patient.weight.value}} {{fc.patient.weight.unit}} <span class="patientspan">{{fc.patient.weight.date}}</span></dd>
+        <dt>Temperature</dt>
+        <dd>{{fc.patient.temp.value}} {{fc.patient.temp.unit}} <span class="patientspan">{{fc.patient.temp.date}}</span></dd>
       </dl>
     </div>
   </div>
@@ -64,7 +60,7 @@
     <div class="col-md-1">
     </div>
     <div class="col-md-5 bg-infolight-a">
-      <span>Hypertensive disorder
+      <span class="patientspan">Hypertensive disorder
         <div class="problembutton pull-right hidden" data-mainsearchcriteria_v_c="38341003" data-mainsearchcriteria_v_dn="Hypertensive disorder">
           <em>i</em>
         </div>
