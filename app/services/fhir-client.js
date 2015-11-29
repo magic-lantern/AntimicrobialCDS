@@ -13,7 +13,7 @@ export default Ember.Service.extend({
     var self = this;
     this._super(...arguments);
     // this line prevents the addition of a timestamp to the fhir-client.js file
-    //Ember.$.ajaxSetup({cache: true});
+    Ember.$.ajaxSetup({cache: true});
     // calling this creates the global FHIR object
     Ember.$.getScript("https://sandbox.hspconsortium.org/dstu2/fhir-client/fhir-client.js")
     .done(function() {
@@ -33,7 +33,6 @@ export default Ember.Service.extend({
           self.set('isLoading', false);
         });
       });
-
       console.log("service - FHIR script loaded successfully.");
     })
     .fail(function() {
@@ -42,7 +41,7 @@ export default Ember.Service.extend({
   },
   readWeight: function() {
     var self = this;
-    self.patient.weight = {}
+    self.patient.weight = {};
     this.patientContext.Observation
       .where
       .code("3141-9")
@@ -64,7 +63,7 @@ export default Ember.Service.extend({
   },
   readTemp: function() {
     var self = this;
-    self.patient.temp = {}
+    self.patient.temp = {};
     this.patientContext.Observation
       .where
       .code("8310-5")
