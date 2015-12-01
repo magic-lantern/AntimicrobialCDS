@@ -19,7 +19,14 @@ module.exports = function(environment) {
       // snomed-ct codes used to fire the Acute Otitis Media and related cases CDS logic
       aom_cds: ['3110003','65363002'],
       // snomed-ct codes used to fire the Streptococcal Pharyngitis and related cases CDS logic
-      strep_cds: ['43878008','1532007']
+      strep_cds: ['43878008','1532007'],
+      // Observations that should not appear in lab section.
+      // 55284-4 - Combined Bloodpressure (systolic and diastolic)
+      // 8480-6 - Systolic Bloodpressure
+      // 8462-4 - Diastolic Bloodpressure
+      // 3141-9 - Weight
+      // 8310-5 - Temperature
+      lab_exclusions: ['55284-4', '8480-6', '8462-4', '3141-9', '8310-5']
     }
   };
 

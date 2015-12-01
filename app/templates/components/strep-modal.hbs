@@ -1,0 +1,109 @@
+<div id="StrepModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Bacterial disease diagnosis and medication guide</h4>
+        <p>Based on Intermountain Healthcare's <a href="https://intermountainhealthcare.org/ext/Dcmnt?ncid=525953897">Streptococcal Pharyngitis Care Process Model</a> updated January 2014</p>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="radio">
+                  <label>
+                    <h4>
+                      <input type="radio" name="meets" id="meetsRadios1" value="option1" checked>
+                      Meets the following
+                    </h4>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="radio">
+                  <label>
+                    <h4>
+                      <input type="radio" name="meets" id="meetsRadios2" value="option2">
+                      Does NOT meet the following
+                    </h4>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <p>Has cloudy yellow fluid in the middle ear space PLUS at least 1 of the following:</p>
+              <ol>
+                <li>Bulging ear drum</li>
+                <li>Otorrhea</li>
+                <li>Mild bulging with redness AND new pain</li>
+              </ol>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="radio">
+                  <label>
+                    <h4>
+                      <input type="radio" name="severity" id="severityRadios1" value="option1" checked>
+                      Severe AOM
+                    </h4>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="radio">
+                  <label>
+                    <h4>
+                      <input type="radio" name="severity" id="severityRadios2" value="option2">
+                      Mild or Moderate AOM
+                    </h4>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <p>Severe Includes:</p>
+              <ul>
+                <li>Significant ear pain for > 48 hours OR</li>
+                <li>Fever > 39&deg;C <span class="note">Current temp: 40&deg;C</span> OR</li>
+                <li>Otorrhea</li>
+              </ul>
+            </div>
+            <div class="row">
+              <h4>Select antibiotic</h4>
+              <p>Based on patient <span class="note">current weight 25kg, age 7 years old</span>, and known allergies, recommended option selected</p>
+              <div class="radio">
+                <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                <strong>Amoxicillin: 1000mg b.i.d. for 6 days</strong>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                Second Line Choice - Use if patient has taken amoxicillin in past 30 days or has conjunctivitis
+                <strong>Amoxicillin-clavulanate: 1000mg b.i.d. for 6 days</strong>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                No Antibiotic
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <h4>Diagnostic Criteria for Acute Otitis Media requiring antibiotics met</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Review and Sign</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{{yield}}

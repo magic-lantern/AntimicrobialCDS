@@ -1,12 +1,20 @@
+{{#if fc.fhirFailed}}
+  <div class="alert alert-danger" role="alert">
+    Authentication or Loading patient data failed. Using fake patient data.
+  </div>
+{{/if}}
+
 {{#unless fc.isAuthenticated}}
   <div class="alert alert-danger" role="alert">
     <p class="bg-danger">Patient Context not loaded or not Authenticated, app will not function.</p>
   </div>
   {{launch-instructions}}
 {{else}}
-  <h4>Patient Context loaded and Authentication has succeeded</h4>
+  <h4>Authentication has succeeded.</h4>
   {{#if fc.isLoading}}
-    <div class="alert alert-info" role="alert">Loading Application...</div>
+    <div class="alert alert-info" role="alert">Loading Application... Waiting up to 5 seconds.</div>
+  {{else}}
+    <h4>Patient Context has loaded.</h4>
   {{/if}}
   <br/>
   <br/>

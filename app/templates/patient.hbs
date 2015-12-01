@@ -19,9 +19,15 @@
       <p class="lead">Recent Vitals</p>
       <dl class="dl-horizontal zeroborder">
         <dt>Weight</dt>
-        <dd>{{fc.patient.weight.value}} {{fc.patient.weight.unit}} <span class="patientspan">{{fc.patient.weight.date}}</span></dd>
+        <dd>{{round fc.patient.weight.value}} {{fc.patient.weight.unit}} <span class="patientspan">{{fc.patient.weight.date}}</span></dd>
         <dt>Temperature</dt>
-        <dd>{{fc.patient.temp.value}} {{fc.patient.temp.unit}} <span class="patientspan">{{fc.patient.temp.date}}</span></dd>
+        <dd>{{round fc.patient.temp.value}} {{fc.patient.temp.unit}} <span class="patientspan">{{fc.patient.temp.date}}</span></dd>
+        <dt>BP Systolic</dt>
+        <dd>{{fc.patient.bloodpressure.systolic.value}} {{fc.patient.bloodpressure.systolic.unit}}
+          <span class="patientspan">{{fc.patient.bloodpressure.systolic.date}}</span></dd>
+        <dt>BP Diastolic</dt>
+        <dd>{{fc.patient.bloodpressure.diastolic.value}} {{fc.patient.bloodpressure.diastolic.unit}}
+          <span class="patientspan">{{fc.patient.bloodpressure.diastolic.date}}</span></dd>
       </dl>
     </div>
   </div>

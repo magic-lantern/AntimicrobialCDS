@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
         }
         else if (ENV.APP.strep_cds.indexOf(diagnosis) > -1) {
           console.log("need to fire Strep CDS");
+          Ember.$('#StrepModal').modal('show');
         }
         else {
           console.log("unknown SNOMED-CT code.");
