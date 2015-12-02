@@ -14,7 +14,9 @@
   {{#if fc.isLoading}}
     <div class="alert alert-info" role="alert">Loading Application... Waiting up to 5 seconds.</div>
   {{else}}
+    {{#unless fc.fhirFailed}}
     <h4>Patient Context has loaded.</h4>
+    {{/unless}}
   {{/if}}
   <br/>
   <br/>

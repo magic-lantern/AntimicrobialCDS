@@ -30,7 +30,7 @@ patient.Observation
     .where
     .code("8302-2")
     .date('>2001')  //show results from newer than 2001
-    ._count(20)  // how many results to return - default is 10
+    ._count(1)  // how many results to return - default is 10
     //._sortDesc("_id")//.effectiveDateTime") // start with newest results instead of oldest
     //._sortDesc("_lastUpdated")
     //._sortDesc("_tag")
@@ -56,25 +56,25 @@ patient.Observation
 
   console.log("Patient observation search result : ", patient.Observation.where.search());
 
-  // patient.MedicationStatement.where.search().then(function(m1){
-  //   console.log("m1 : ", m1);
-  // });
-  // /*
-  // patient.MedicationOrder.where.search().then(function(m2){
-  //   console.log("m2 : ", m2);
-  // });
-  // */
-  // patient.MedicationDispense.where.search().then(function(m3){
-  //   console.log("m3 : ", m3);
-  // });
-  // /*
-  // patient.Medication.where.search().then(function(m4){
-  //   console.log("m4 : ", m4);
-  // });
-  // */
-  // patient.MedicationAdministration.where.search().then(function(m5){
-  //   console.log("m5 : ", m5);
-  // });
+  patient.MedicationStatement.where.search().then(function(m1){
+    console.log("m1 : ", m1);
+  });
+  /*
+  patient.MedicationOrder.where.search().then(function(m2){
+    console.log("m2 : ", m2);
+  });
+  */
+  patient.MedicationDispense.where.search().then(function(m3){
+    console.log("m3 : ", m3);
+  });
+  /*
+  patient.Medication.where.search().then(function(m4){
+    console.log("m4 : ", m4);
+  });
+  */
+  patient.MedicationAdministration.where.search().then(function(m5){
+    console.log("m5 : ", m5);
+  });
 
   patient.AllergyIntolerance.where.search().then(function(a){
     console.log("Allergy : ", a);

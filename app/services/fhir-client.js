@@ -2,7 +2,18 @@
 import Ember from 'ember';
 var myglobal;
 export default Ember.Service.extend({
-  patient: {},
+  patient: {
+    formatted_name: null,
+    gender: null,
+    birthDate: null,
+    formatted_address: null,
+    temp: {},
+    weight: {},
+    bloodpressure: {
+      diastolic: {},
+      systolic: {}
+    }
+  },
   patientContext: null,
   fhirclient: null,
   isAuthenticated: false,
@@ -17,6 +28,7 @@ export default Ember.Service.extend({
     // wait up to 10 seconds for everything to work. If fails, use fake patient data
     var timeout = setTimeout(function() {
       self.set('fhirFailed', true);
+      self.set('isLoading', false);
       self.loadPatient('demo');
     }, 5000);
 
@@ -140,20 +152,20 @@ export default Ember.Service.extend({
         unit: 'kg'
       };
       this.patient.temp = {
-        value: 39,
+        value: 40,
         date: '',
         unit: 'Cel'
       };
       this.patient.bloodpressure = {
-        diastolic : {
+        systolic : {
           value: 100,
           date: '',
-          unit: ''
+          unit: 'mmHg'
         },
-        systolic : {
+        diastolic : {
           value: 60,
           date: '',
-          unit: ''
+          unit: 'mmHg'
         }
       };
     }
