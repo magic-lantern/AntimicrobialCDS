@@ -77,3 +77,15 @@ dd > span, .faded {
   padding-bottom: 15px;
   margin-right: 1rem;
 }
+.fa {
+  font-size: 125%;
+}
+.fa-check-circle-o {
+  color: green;
+}
+.fa-times-circle-o {
+  color: red;
+}
+.list > p {
+  margin: 0 0 0 20px
+}

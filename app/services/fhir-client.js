@@ -1,12 +1,29 @@
 /* global FHIR */
 import Ember from 'ember';
-var myglobal;
+import moment from 'moment';
+import ENV from '../config/environment';
+
 export default Ember.Service.extend({
   patient: {
     formatted_name: null,
     gender: null,
     birthDate: null,
     formatted_address: null,
+    age_value: Ember.computed('birthDate', function() {
+      console.log('13 :', this);
+      var retval = 0;
+      if (!Ember.isNone(this.birthDate)) {
+        var bday = moment(this.birthDate, ENV.APP.date_format);
+        retval = moment().diff(bday, 'years');
+        this.unit = 'years';
+        if (retval <= 2) {
+          retval = moment().diff(bday, 'months');
+          this.age_unit = 'months';
+        }
+      }
+      return retval;
+    }),
+    age_unit: 'years',
     temp: {},
     weight: {},
     bloodpressure: {
@@ -30,7 +47,7 @@ export default Ember.Service.extend({
       self.set('fhirFailed', true);
       self.set('isLoading', false);
       self.loadPatient('demo');
-    }, 5000);
+    }, 2000);
 
     // this line prevents the addition of a timestamp to the fhir-client.js file
     Ember.$.ajaxSetup({cache: true});
@@ -129,7 +146,6 @@ export default Ember.Service.extend({
   getConditions: function() {
     var self = this;
     console.log("this.patientContext : ", self.patientContext);
-    console.log("myglobal : ", myglobal);
     setTimeout(function() {
       console.log("this.patientContext : ", self.patientContext);
       self.patientContext.Condition
@@ -143,31 +159,33 @@ export default Ember.Service.extend({
   },
   loadPatient: function(patient) {
     if(patient === 'demo') {
+      var date = moment().format(ENV.APP.date_format);
       this.set('patient.formatted_name', 'Kacey Jones');
-      this.patient.formatted_address = '123 Place Lane, Salt Lake City, UT';
-      this.patient.gender = 'male';
-      this.patient.weight = {
+      this.set('patient.formatted_address', '123 Place Lane, Salt Lake City, UT');
+      this.set('patient.gender', 'male');
+      this.set('patient.birthDate', '2008/01/01');
+      this.set('patient.weight', {
         value: 18,
-        date: '',
+        date: date,
         unit: 'kg'
-      };
-      this.patient.temp = {
+      });
+      this.set('patient.temp', {
         value: 40,
-        date: '',
+        date: date,
         unit: 'Cel'
-      };
-      this.patient.bloodpressure = {
+      });
+      this.set('patient.bloodpressure', {
         systolic : {
           value: 100,
-          date: '',
+          date: date,
           unit: 'mmHg'
         },
         diastolic : {
           value: 60,
-          date: '',
+          date: date,
           unit: 'mmHg'
         }
-      };
+      });
     }
   }
 });

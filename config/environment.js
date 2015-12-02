@@ -16,6 +16,7 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+      date_format: 'YYYY/MM/DD',
       // snomed-ct codes used to fire the Acute Otitis Media and related cases CDS logic
       aom_cds: ['3110003','65363002'],
       // snomed-ct codes used to fire the Streptococcal Pharyngitis and related cases CDS logic
@@ -26,7 +27,8 @@ module.exports = function(environment) {
       // 8462-4 - Diastolic Bloodpressure
       // 3141-9 - Weight
       // 8310-5 - Temperature
-      lab_exclusions: ['55284-4', '8480-6', '8462-4', '3141-9', '8310-5']
+      lab_exclusions: ['55284-4', '8480-6', '8462-4', '3141-9', '8310-5'],
+      aom_temp_threshold: 39,
     }
   };
 

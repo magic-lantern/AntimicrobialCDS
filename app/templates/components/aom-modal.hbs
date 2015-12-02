@@ -77,18 +77,22 @@
               </div>
               <div class="row">
                 <p>Severe Includes:</p>
-                <ul>
-                  <li>Significant ear pain for > 48 hours OR</li>
-                  <li><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
-                    Fever > 39&deg;C <span class="note">Current temp: {{round fc.patient.temp.value}}{{fc.patient.temp.unit}}</span> OR</li>
-                  <li>Otorrhea</li>
-                </ul>
+                <div class="list">
+                  <p>{{fa-icon icon="circle-o"}} Significant ear pain for > 48 hours OR</p>
+                  <p>{{#if exceedTempThreshold}}
+                        {{fa-icon icon="check-circle-o"}}
+                      {{else}}
+                        {{fa-icon icon="times-circle-o"}}
+                      {{/if}}
+                    Fever > 39&deg;C <span class="note">Current temp: {{round fc.patient.temp.value}}{{fc.patient.temp.unit}}</span> OR</p>
+                  <p>{{fa-icon icon="circle-o"}} Otorrhea</p>
+                </div>
               </div>
             </div>
             <div id="step4" class="hidden">
               <div class="row">
                 <h4>Select antibiotic</h4>
-                <p>Based on patient <span class="note">current weight {{round fc.patient.weight.value}}{{fc.patient.weight.unit}}, age 7 years old</span>,
+                <p>Based on patient <span class="note">current weight {{round fc.patient.weight.value}}{{fc.patient.weight.unit}}, age {{fc.patient.age_value}} {{fc.patient.age_unit}} old</span>,
                    and known allergies, recommended option selected</p>
                 <div class="radio">
                   <label>

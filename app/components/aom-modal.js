@@ -1,6 +1,11 @@
 import Ember from 'ember';
+import ENV from '../config/environment';
 
 export default Ember.Component.extend({
+  exceedTempThreshold : Ember.computed('fc.patient.temp.value', function() {
+    return (this.fc.patient.temp.value > ENV.APP.aom_temp_threshold);
+  }),
+
   actions: {
     step1(idenable, iddisable) {
       Ember.$('#' + idenable).addClass('selectedimage');
