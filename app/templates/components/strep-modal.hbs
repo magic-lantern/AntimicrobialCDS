@@ -8,92 +8,136 @@
       </div>
       <div class="modal-body">
         <div class="container">
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
+          <div class="modal-fixes">
+            <div class="row" id="step1">
+              <div class="col-sm-6">
                 <div class="radio">
                   <label>
                     <h4>
-                      <input type="radio" name="meets" id="meetsRadios1" value="option1" checked>
-                      Meets the following
+                      <input type="radio" name="meets" id="meetsRadios1" value="option1" {{action 'step1_next'}}>
+                      Matches Streptococcal pharyngitis
                     </h4>
                   </label>
                 </div>
+                <ul>
+                  <li>Sudden onset of sore throat</li>
+                  <li>Age 5–15 years (most common)</li>
+                  <li>Fever</li>
+                  <li>Headache</li>
+                  <li>Nausea, vomiting, abdominal pain</li>
+                  <li>Tonsillopharyngeal inflammation</li>
+                  <li>Patchy tonsillopharyngeal exudates</li>
+                  <li>Palatal petechiae</li>
+                  <li>Tender nodes</li>
+                  <li>Winter and early spring presentation</li>
+                  <li>History of exposure to strep pharyngitis</li>
+                  <li>Scarlatiniform rash</li>
+                  <li>Edematous uvula</li>
+                </ul>
               </div>
-              <div class="col-md-6">
+              <div class="col-sm-6">
                 <div class="radio">
                   <label>
                     <h4>
-                      <input type="radio" name="meets" id="meetsRadios2" value="option2">
-                      Does NOT meet the following
+                      <input type="radio" name="meets" id="meetsRadios2" value="option2" {{action 'step1_done'}}>
+                      Matches Viral pharyngitis
                     </h4>
+                  </label>
+                </div>
+                <ul>
+                  <li>Conjunctivitis</li>
+                  <li>Coryza</li>
+                  <li>Cough</li>
+                  <li>Diarrhea</li>
+                  <li>Hoarseness</li>
+                  <li>Discrete ulcerative stomatitis</li>
+                  <li>Viral exanthema</li>
+                </ul>
+              </div>
+            </div>
+            <div class="row" id="step2">
+              <h4>Rapid antigen detection test (RADT) result</h4>
+              <p>No RADT result on file - perform test in office to proceed.</p>
+              <div class="radio_group">
+                <div class="radio">
+                  <label>
+                      <input type="radio" name="radt" id="radt1" value="positive" {{action 'step2_next'}}>
+                      Positive
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                      <input type="radio" name="radt" id="radt2" value="negative" {{action 'step2_done'}}>
+                      Negative
                   </label>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <p>Has cloudy yellow fluid in the middle ear space PLUS at least 1 of the following:</p>
-              <ol>
-                <li>Bulging ear drum</li>
-                <li>Otorrhea</li>
-                <li>Mild bulging with redness AND new pain</li>
-              </ol>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
+            <div class="row" id="step3">
+              <h4>Throat Culture result</h4>
+              <p>No Throat Culture result on file - perform test to proceed.</p>
+              <div class="radio_group">
                 <div class="radio">
                   <label>
-                    <h4>
-                      <input type="radio" name="severity" id="severityRadios1" value="option1" checked>
-                      Severe AOM
-                    </h4>
+                      <input type="radio" name="culture" id="culture1" value="positive" {{action 'step3_next'}}>
+                      Positive
                   </label>
                 </div>
-              </div>
-              <div class="col-md-6">
                 <div class="radio">
                   <label>
-                    <h4>
-                      <input type="radio" name="severity" id="severityRadios2" value="option2">
-                      Mild or Moderate AOM
-                    </h4>
+                      <input type="radio" name="culture" id="culture2" value="negative" {{action 'step3_done'}}>
+                      Negative
                   </label>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <p>Severe Includes:</p>
-              <ul>
-                <li>Significant ear pain for > 48 hours OR</li>
-                <li>Fever > 39&deg;C <span class="note">Current temp: 40&deg;C</span> OR</li>
-                <li>Otorrhea</li>
-              </ul>
+            <div id="step4" class="">
+              <div class="row">
+                <h4>Select patient medication preference</h4>
+                <div class="radio_group">
+                  <div class="radio">
+                    <label>
+                    <input type="radio" name="medication_form" id="medication_form_liquid" value="liquid" {{action 'step4' 'liquid' on='change'}}>
+                    Liquid
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                    <input type="radio" name="medication_form" id="medication_form_pill" value="pill" {{action 'step4' 'pill' on='change'}}>
+                    Pill/Tablet
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="row">
               <h4>Select antibiotic</h4>
-              <p>Based on patient <span class="note">current weight 25kg, age 7 years old</span>, and known allergies, recommended option selected</p>
-              <div class="radio">
-                <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                <strong>Amoxicillin: 1000mg b.i.d. for 6 days</strong>
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                Second Line Choice - Use if patient has taken amoxicillin in past 30 days or has conjunctivitis
-                <strong>Amoxicillin-clavulanate: 1000mg b.i.d. for 6 days</strong>
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-                No Antibiotic
-                </label>
+              <p>Based on patient <span class="note">current weight {{round fc.patient.weight.value}}{{fc.patient.weight.unit}},
+                 age {{fc.patient.age_value}} {{fc.patient.age_unit}} old</span>, and known allergies, recommended option selected</p>
+              <div class="radio_group">
+                <div class="radio">
+                  <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                  <strong>Amoxicillin: 1000mg b.i.d. for 6 days</strong>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                  Second Line Choice - Use if patient has taken amoxicillin in past 30 days or has conjunctivitis
+                  <strong>Amoxicillin-clavulanate: 1000mg b.i.d. for 6 days</strong>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                  No Antibiotic
+                  </label>
+                </div>
               </div>
             </div>
             <div class="row">
-              <h4>Diagnostic Criteria for Acute Otitis Media requiring antibiotics met</h4>
+              <h4>Diagnostic Criteria for Streptococcal Pharyngitis requiring antibiotics met</h4>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 {{#if fc.fhirFailed}}
   <div class="alert alert-danger" role="alert">
-    Authentication or Loading patient data failed. Using fake patient data.
+    Authentication or Loading patient data failed. Using fake patient data. <button type="button" class="btn btn-sm btn-warning" {{action 'override'}}>Override</button>
   </div>
 {{/if}}
 

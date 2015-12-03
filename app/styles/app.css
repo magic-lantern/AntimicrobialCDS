@@ -1,3 +1,9 @@
+body {
+  padding-right: 0px !important
+}
+.modal-open {
+  overflow-y: auto;
+}
 .dl-horizontal dt {
   width: 110px;
 }
@@ -63,7 +69,7 @@ dd > span, .faded {
   color: red;
 }
 .modal-dialog {
-  width: 625px;
+  width: 700px;
 }
 .selectedimage {
   border: 6px solid blue;
@@ -88,4 +94,10 @@ dd > span, .faded {
 }
 .list > p {
   margin: 0 0 0 20px
+}
+.radio_group {
+  margin-left: 20px;
+}
+.modal-fixes {
+  width: 650px;
 }

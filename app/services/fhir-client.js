@@ -33,6 +33,7 @@ export default Ember.Service.extend({
   },
   patientContext: null,
   fhirclient: null,
+  fhirPatient: null,
   isAuthenticated: false,
   isLoading: true,
   fhirFailed: false,
@@ -57,19 +58,22 @@ export default Ember.Service.extend({
       FHIR.oauth2.ready(function (fhirclient) {
         self.set('isAuthenticated', true);
         self.set('fhirclient', fhirclient);
-        if(!Ember.isEmpty(fhirclient)) {
+        if(!Ember.isNone(fhirclient)) {
           console.log("fhirclient : ", fhirclient);
-          if(!Ember.isEmpty(fhirclient.context)) {
-            console.log("fhirclient.context : ", fhirclient.context);
-            console.log("fhirclient.context.patient : ", fhirclient.context.patient);
-            self.set('patientContext', fhirclient.context.patient);
-            self.patientContext.read()
-            .then(function(p){
-              self.set('patient', p);
+          if(!Ember.isNone(fhirclient.patient)) {
+            console.log("fhirclient.patient : ", fhirclient.patient);
+            self.set('patientContext', fhirclient.patient);
+            Ember.$.when(self.patientContext.read())
+            .done(function(p){
               console.log("Patient: ", p);
+              self.set('fhirPatient', p);
               var name = p.name[0];
               self.patient.formatted_name = name.given.join(" ") + " " + name.family;
-              self.patient.formatted_address = p.address[0].line[0] + ', ' + p.address[0].city + ', ' + p.address[0].state;
+              if(!Ember.isNone(p.address)) {
+                self.patient.formatted_address = p.address[0].line[0] + ', ' + p.address[0].city + ', ' + p.address[0].state;
+              }
+              self.patient.birthDate = p.birthDate;
+              self.patient.gender = p.gender;
               self.readWeight();
               self.readTemp();
               self.readBP();
@@ -88,60 +92,85 @@ export default Ember.Service.extend({
     });
   },
   readWeight: function() {
-    this.patient.weight = this.getObservation('3141-9');
+    var self = this;
+    self.getObservation('3141-9', function(r){
+      self.patient.weight = r;
+    });
   },
   readTemp: function() {
-    this.patient.temp = this.getObservation('8310-5');
+    var self = this;
+    self.getObservation('8310-5', function(r){
+      self.patient.temp = r;
+    });
   },
   readBP: function() {
-    this.patient.bloodpressure = {diastolic: '', systolic: ''};
-    this.patient.bloodpressure.diastolic = this.getObservation('8462-4');
-    this.patient.bloodpressure.systolic = this.getObservation('8480-6');
-  },
-  getObservation: function(code, count = 1) {
     var self = this;
+    self.patient.bloodpressure = {};
+    self.getObservation('8462-4', function(r){
+      self.patient.bloodpressure.diastolic = r;
+    });
+    self.getObservation('8480-6', function(r){
+      self.patient.bloodpressure.systolic = r;
+    });
+  },
+  getObservation: function(code, callback, count = 1) {
     var ret = {value: 'No Observation'};
-    this.patientContext.Observation
-      .where
-      .code(code)
-      ._count(count)  // how many results to return - default is 10
-      ._sortDesc("date")  // start with newest result
-      .search()
-      .then(function(observations) {
-        console.log("All Observations : ", observations);
-        observations.forEach(function(obs) {
-          console.log("Observation : ", obs);
-          if (obs.hasOwnProperty("effectiveDateTime") && obs.hasOwnProperty("valueQuantity") &&
-              obs.valueQuantity.hasOwnProperty("value") && obs.valueQuantity.hasOwnProperty("unit")) {
-            ret.value = obs.valueQuantity.value;
-            ret.date = obs.effectiveDateTime;
-            ret.unit = obs.valueQuantity.unit;
+
+    Ember.$.when(this.patientContext.api.search({
+      'type': "Observation",
+      'query': {
+        'code': code,
+        '_sort:desc':'date'},
+      'count': count}))
+      .done(function(observations) {
+        console.log('observations: ', observations);
+        if (observations.data.total > 0) {
+          observations.data.entry.forEach(function(obs) {
+            if (obs.resource.hasOwnProperty('effectiveDateTime') &&
+                obs.resource.hasOwnProperty('valueQuantity') &&
+                obs.resource.valueQuantity.hasOwnProperty('value') &&
+                obs.resource.valueQuantity.hasOwnProperty('unit')) {
+              ret.value = obs.resource.valueQuantity.value;
+              ret.date = obs.resource.effectiveDateTime;
+              ret.unit = obs.resource.valueQuantity.unit;
+            }
+            else {
+              console.log("fhir-client - expected properties missing for code ", code);
+            }
+          });
+        }
+        if (typeof callback === 'function') {
+          callback(ret);
+        }
+    });
+  },
+  getMedications: function(code, callback, count = 1) {
+    var ret = {value: 'No Observation'};
+
+    Ember.$.when(this.patientContext.api.search({
+      'type': "Medication",
+      'query': {
+        'code': code,
+        '_sort:desc':'date'},
+      'count': count}))
+      .done(function(observations) {
+        observations.data.entry.forEach(function(obs) {
+          if (obs.resource.hasOwnProperty('effectiveDateTime') &&
+              obs.resource.hasOwnProperty('valueQuantity') &&
+              obs.resource.valueQuantity.hasOwnProperty('value') &&
+              obs.resource.valueQuantity.hasOwnProperty('unit')) {
+            ret.value = obs.resource.valueQuantity.value;
+            ret.date = obs.resource.effectiveDateTime;
+            ret.unit = obs.resource.valueQuantity.unit;
+            if (typeof callback === 'function') {
+              callback(ret);
+            }
           }
           else {
             console.log("fhir-client - expected properties missing for code ", code);
           }
-          return ret;
         });
     });
-    return ret;
-  },
-  getMedications: function() {
-    var self = this;
-    // not currently working
-    /*
-    console.log("this.patientContext : ", self.patientContext);
-
-    setTimeout(function() {
-      console.log("this.patientContext : ", self.patientContext);
-      self.patientContext.Medication
-        .where
-        ._sortDesc("date")  // start with newest result
-        .search()
-        .then(function(meds){
-          console.log("Medications : ", meds);
-      });
-    }, 3000);
-    */
   },
   getConditions: function() {
     var self = this;

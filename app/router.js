@@ -32,10 +32,4 @@ export default Router;
     lab result - FHIR resource Observation
 
     need collection for each of the above. Sort by date
-
-var SongCollection = Ember.Object.extend({
-  content: [],
-  sortProperties: ['rating:desc'],
-  sortedContent: Ember.computed.sort('content', 'sortProperties'),
-});
 */

@@ -8,35 +8,35 @@
       </div>
       <div class="modal-body">
         <div class="container">
-          <div class="col-md-6">
+          <div class="modal-fixes">
             <div class="row" id="step1">
               <h4>Select the image that most closely resembles the patient's inner ear</h4>
             </div>
             <div class="row">
-              <div class="col-md-6">
-                <img id="bacterial_infection" src="images/bacterial_infection.jpg" alt="Acute otitis media" class="img-circle img-responsive" {{action 'step1' 'bacterial_infection' 'no_antibiotic'}}>
+              <div class="col-sm-6">
+                <img id="bacterial_infection" src="images/bacterial_infection.jpg" alt="Acute otitis media" class="img-circle img-responsive" {{action 'step1_next' 'bacterial_infection' 'no_antibiotic'}}>
               </div>
-              <div class="col-md-6">
-                <img id="no_antibiotic" src="images/no_antibiotic.jpg" alt="Otitis media with effusion" class="img-circle img-responsive" {{action 'step1' 'no_antibiotic' 'bacterial_infection'}}>
+              <div class="col-sm-6">
+                <img id="no_antibiotic" src="images/no_antibiotic.jpg" alt="Otitis media with effusion" class="img-circle img-responsive" {{action 'step1_done' 'no_antibiotic' 'bacterial_infection'}}>
               </div>
             </div>
             <div id="step2" class="hidden">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-sm-6">
                   <div class="radio">
                     <label>
                       <h4>
-                        <input type="radio" name="meets" id="meetsRadios1" value="option1" {{action 'step2' on='change'}}>
+                        <input type="radio" name="meets" id="meetsRadios1" value="option1" {{action 'step2_next' on='change'}}>
                         Meets the following
                       </h4>
                     </label>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6">
                   <div class="radio">
                     <label>
                       <h4>
-                        <input type="radio" name="meets" id="meetsRadios2" value="option2" {{action 'step2' on='change'}}>
+                        <input type="radio" name="meets" id="meetsRadios2" value="option2" {{action 'step2_done' on='change'}}>
                         Does NOT meet the following
                       </h4>
                     </label>
@@ -54,21 +54,21 @@
             </div>
             <div id="step3" class="hidden">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-sm-6">
                   <div class="radio">
                     <label>
                       <h4>
-                        <input type="radio" name="severity" id="severityRadios1" value="option1" {{action 'step3' on='change'}}>
+                        <input type="radio" name="severity" id="severityRadios1" value="option1" {{action 'step3_next' on='change'}}>
                         Severe AOM
                       </h4>
                     </label>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6">
                   <div class="radio">
                     <label>
                       <h4>
-                        <input type="radio" name="severity" id="severityRadios2" value="option2" {{action 'step3' on='change'}}>
+                        <input type="radio" name="severity" id="severityRadios2" value="option2" {{action 'step3_done' on='change'}}>
                         Mild or Moderate AOM
                       </h4>
                     </label>
@@ -91,25 +91,44 @@
             </div>
             <div id="step4" class="hidden">
               <div class="row">
+                <h4>Select patient medication preference</h4>
+                <div class="radio_group">
+                  <div class="radio">
+                    <label>
+                    <input type="radio" name="medication_form" id="medication_form_liquid" value="liquid" {{action 'step4' 'liquid' on='change'}}>
+                    Liquid
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                    <input type="radio" name="medication_form" id="medication_form_pill" value="pill" {{action 'step4' 'pill' on='change'}}>
+                    Pill/Tablet
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="step5" class="hidden">
+              <div class="row">
                 <h4>Select antibiotic</h4>
                 <p>Based on patient <span class="note">current weight {{round fc.patient.weight.value}}{{fc.patient.weight.unit}}, age {{fc.patient.age_value}} {{fc.patient.age_unit}} old</span>,
                    and known allergies, recommended option selected</p>
                 <div class="radio">
                   <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" {{action 'step5'}}>
                   <strong>Amoxicillin: 1000mg b.i.d. for 6 days</strong>
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" {{action 'step5'}}>
                   Second Line Choice - Use if patient has taken amoxicillin in past 30 days or has conjunctivitis
                   <strong>Amoxicillin-clavulanate: 1000mg b.i.d. for 6 days</strong>
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" {{action 'step5'}}>
                   No Antibiotic
                   </label>
                 </div>
@@ -118,12 +137,17 @@
                 <h4>Diagnostic Criteria for Acute Otitis Media requiring antibiotics met</h4>
               </div>
             </div>
+            <div id="criteria_not_met" class="row hidden">
+              <h4>Diagnostic Criteria for Acute Otitis Media requiring antibiotics <span class="note">not</span> met.</h4>
+              <p>Recommend close follow-up but no antibiotics. <button type="button" class="btn btn-sm btn-warning" {{action 'override'}}>Override</button></p>
+              <input id="override" type="text" class="form-control hidden" placeholder="Reason for override">
+            </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Review and Sign</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="button" id="review" class="btn btn-primary pull-left hidden" data-dismiss="modal">Review and Sign</button>
+        <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

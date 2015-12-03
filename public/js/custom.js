@@ -1,6 +1,16 @@
 var patient;
 
 FHIR.oauth2.ready(function (fhirClient) {
+  patient = fhirClient.patient;
+  $.when(patient.read())
+    .done(function(p){
+    var name = p.name[0];
+    var formattedName = name.given[0] + " " + name.family;
+    $("#patientName").text(formattedName);
+  });
+
+/*
+FHIR.oauth2.ready(function (fhirClient) {
   patient = fhirClient.context.patient;
   patient.read()
     .then(function(p){
@@ -9,7 +19,7 @@ FHIR.oauth2.ready(function (fhirClient) {
       var formatted = name.given.join(" ") + " " + name.family;
       $("#patientName").text(formatted);
   });
-
+*/
 /*
 // return the first 100 observations
 patient.Observation
@@ -26,6 +36,24 @@ patient.Observation
     ._count(100)  // how many results to return - default is 10
     .search()
     */
+
+
+  $.when(patient.api.search({type: "Observation", query: {code: '8302-2', '_sort:desc':'date'}, count: 50}))
+    .done(function(obsSearchResults){
+      obsSearchResults.data.entry.forEach(function(obs){
+      var obsRow = "<tr><td>" + obs.resource.effectiveDateTime + "</td>" + "<td>" +
+      obs.resource.valueQuantity.value + obs.resource.valueQuantity.unit + "</td></tr>"
+      $("#observation_list").append(obsRow);
+    });
+  });
+
+/*
+  $.get( "https://sandbox.hspconsortium.org/dstu2/hsp-reference-api/data/Observation?_sort=date&patient=15135&code=8302-2")
+  .done(function( data ) {
+    console.log( "Data returned: " + data );
+  });
+*/
+/*
   patient.Observation
     .where
     .code("8302-2")
@@ -53,30 +81,30 @@ patient.Observation
         }
       });
   });
-
-  console.log("Patient observation search result : ", patient.Observation.where.search());
-
-  patient.MedicationStatement.where.search().then(function(m1){
-    console.log("m1 : ", m1);
-  });
-  /*
-  patient.MedicationOrder.where.search().then(function(m2){
-    console.log("m2 : ", m2);
-  });
-  */
-  patient.MedicationDispense.where.search().then(function(m3){
-    console.log("m3 : ", m3);
-  });
-  /*
-  patient.Medication.where.search().then(function(m4){
-    console.log("m4 : ", m4);
-  });
-  */
-  patient.MedicationAdministration.where.search().then(function(m5){
-    console.log("m5 : ", m5);
-  });
-
-  patient.AllergyIntolerance.where.search().then(function(a){
-    console.log("Allergy : ", a);
-  });
+*/
+  // console.log("Patient observation search result : ", patient.Observation.where.search());
+  //
+  // patient.MedicationStatement.where.search().then(function(m1){
+  //   console.log("m1 : ", m1);
+  // });
+  // /*
+  // patient.MedicationOrder.where.search().then(function(m2){
+  //   console.log("m2 : ", m2);
+  // });
+  // */
+  // patient.MedicationDispense.where.search().then(function(m3){
+  //   console.log("m3 : ", m3);
+  // });
+  // /*
+  // patient.Medication.where.search().then(function(m4){
+  //   console.log("m4 : ", m4);
+  // });
+  // */
+  // patient.MedicationAdministration.where.search().then(function(m5){
+  //   console.log("m5 : ", m5);
+  // });
+  //
+  // patient.AllergyIntolerance.where.search().then(function(a){
+  //   console.log("Allergy : ", a);
+  // });
 });
