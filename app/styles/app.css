@@ -35,9 +35,15 @@ span .patientspan {
 }
 .bg-infolight-a {
   background-color: #eef7fb;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .bg-infolight-b {
   background-color: #fbf2ee;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .topspacing {
   margin-top: 1rem;
@@ -50,6 +56,7 @@ dd > span, .faded {
 }
 .lead {
   margin-bottom: 10px;
+  margin-left: 15px;
 }
 .test {
   margin-left: 7.2%;

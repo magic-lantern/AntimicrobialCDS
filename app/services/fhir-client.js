@@ -29,7 +29,8 @@ export default Ember.Service.extend({
     bloodpressure: {
       diastolic: {},
       systolic: {}
-    }
+    },
+    medications: []
   },
   patientContext: null,
   fhirclient: null,
@@ -77,7 +78,7 @@ export default Ember.Service.extend({
               self.readWeight();
               self.readTemp();
               self.readBP();
-              //self.getMedications();
+              self.readMedications();
               //self.getConditions();
               clearTimeout(timeout);
               self.set('isLoading', false);
@@ -124,7 +125,7 @@ export default Ember.Service.extend({
       'count': count}))
       .done(function(observations) {
         console.log('observations: ', observations);
-        if (observations.data.total > 0) {
+        if (!Ember.isNone(observations.data.entry)) {
           observations.data.entry.forEach(function(obs) {
             if (obs.resource.hasOwnProperty('effectiveDateTime') &&
                 obs.resource.hasOwnProperty('valueQuantity') &&
@@ -144,32 +145,42 @@ export default Ember.Service.extend({
         }
     });
   },
-  getMedications: function(code, callback, count = 1) {
-    var ret = {value: 'No Observation'};
-
+  readMedications: function() {
+    var self = this;
+    self.getMedications('', function(r){
+      self.patient.medications = r;
+    });
+  },
+  getMedications: function(code, callback, count = 5) {
+    var ret = [];
+    var r = {};
+    console.log('called medications.');
     Ember.$.when(this.patientContext.api.search({
-      'type': "Medication",
-      'query': {
-        'code': code,
-        '_sort:desc':'date'},
+      'type': "MedicationOrder",
+      // 'query': {
+      //   'code': code,
+      //   '_sort:desc':'date'},
       'count': count}))
-      .done(function(observations) {
-        observations.data.entry.forEach(function(obs) {
-          if (obs.resource.hasOwnProperty('effectiveDateTime') &&
-              obs.resource.hasOwnProperty('valueQuantity') &&
-              obs.resource.valueQuantity.hasOwnProperty('value') &&
-              obs.resource.valueQuantity.hasOwnProperty('unit')) {
-            ret.value = obs.resource.valueQuantity.value;
-            ret.date = obs.resource.effectiveDateTime;
-            ret.unit = obs.resource.valueQuantity.unit;
-            if (typeof callback === 'function') {
-              callback(ret);
+      .done(function(medications) {
+        console.log('medications: ', medications);
+        if (!Ember.isNone(medications.data.entry)) {
+          medications.data.entry.forEach(function(med) {
+            if (med.resource.hasOwnProperty('medicationCodeableConcept')) {
+              var m = med.resource;
+              r.display = m.medicationCodeableConcept.coding.display;
+              r.code = m.medicationCodeableConcept.coding.code;
+              r.dosageInstruction = m.dosageInstruction[0].text;
+              r.date = m.dosageInstruction[0].timing.repeat.boundsPeriod.start;
+              ret.push(r);
             }
-          }
-          else {
-            console.log("fhir-client - expected properties missing for code ", code);
-          }
-        });
+            else {
+              console.log("fhir-client - expected properties missing for code ", code);
+            }
+          });
+        }
+        if (typeof callback === 'function') {
+          callback(ret);
+        }
     });
   },
   getConditions: function() {
