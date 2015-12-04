@@ -109,29 +109,22 @@
               </div>
             </div>
             <div id="step5" class="hidden">
+              <div id="medication">
+                <div class="row">
+                  {{#if fc.patient.hasPenicillinAllergy}}
+                    <h4>Select antibiotic <small><input id="forceallergy" type="checkbox" {{action 'forceallergy' on='change'}} checked> Penicillin Allergy</small></h4>
+                  {{else}}
+                    <h4>Select antibiotic <small><input id="forceallergy" type="checkbox" {{action 'forceallergy' on='change'}}> Penicillin Allergy</small></h4>
+                  {{/if}}
+                  <p>Based on patient <span class="note">current weight {{round fc.patient.weight.value}}{{fc.patient.weight.unit}},
+                    age {{fc.patient.age_value}} {{fc.patient.age_unit}} old</span>, and known allergies, recommended option selected</p>
+                  <div class="radio_group">
+                    {{component medication form=med_form}}
+                  </div>
+                </div>
+              </div>
               <div class="row">
-                <h4>Select antibiotic</h4>
-                <p>Based on patient <span class="note">current weight {{round fc.patient.weight.value}}{{fc.patient.weight.unit}}, age {{fc.patient.age_value}} {{fc.patient.age_unit}} old</span>,
-                   and known allergies, recommended option selected</p>
-                <div class="radio">
-                  <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" {{action 'step5'}}>
-                  <strong>Amoxicillin: 1000mg b.i.d. for 6 days</strong>
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" {{action 'step5'}}>
-                  Second Line Choice - Use if patient has taken amoxicillin in past 30 days or has conjunctivitis
-                  <strong>Amoxicillin-clavulanate: 1000mg b.i.d. for 6 days</strong>
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" {{action 'step5'}}>
-                  No Antibiotic
-                  </label>
-                </div>
+                <p>NOTE: Azithromycin is NOT recommended due to antibiotic resistance.</p>
               </div>
               <div class="row">
                 <h4>Diagnostic Criteria for Acute Otitis Media requiring antibiotics met</h4>

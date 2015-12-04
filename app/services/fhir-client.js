@@ -30,7 +30,9 @@ export default Ember.Service.extend({
       diastolic: {},
       systolic: {}
     },
-    medications: []
+    medications: [],
+    allergies: [],
+    hasPenicillinAllergy: null
   },
   patientContext: null,
   fhirclient: null,
@@ -226,6 +228,7 @@ export default Ember.Service.extend({
           unit: 'mmHg'
         }
       });
+      this.set('patient.hasPenicillinAllergy', true);
     }
   }
 });

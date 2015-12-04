@@ -1,0 +1,21 @@
+<div class="radio">
+  <label>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios1" value="option1" {{action 'step5'}} checked>
+  <strong>Amoxicillin: {{min_dose}}{{unit}} b.i.d. for {{duration}}</strong>
+  </label>
+</div>
+<div class="radio">
+  <label>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios2" value="option2" {{action 'step5'}}>
+  Second Line Choice - Use if patient has taken amoxicillin in past 30 days or has conjunctivitis
+  <strong>Amoxicillin-clavulanate: {{min_dose}}{{unit}} b.i.d. for {{duration}}</strong>
+  </label>
+</div>
+<div class="radio">
+  <label>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios3" value="option3" {{action 'step5'}}>
+  No Antibiotic
+  </label>
+</div>
+
+{{yield}}
