@@ -108,3 +108,6 @@ dd > span, .faded {
 .modal-fixes {
   width: 650px;
 }
+#about > a {
+  color: #337ab7;
+}

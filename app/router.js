@@ -9,6 +9,7 @@ Router.map(function() {
   this.route('medicationorders');
   this.route('conditions');
   this.route('patient');
+  this.route('about');
 });
 
 export default Router;

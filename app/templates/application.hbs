@@ -16,6 +16,7 @@
           <li>{{link-to "Patient Summary" "patient"}}</li>
           <li>{{link-to "Medications" "medicationorders"}}</li>
           <li>{{link-to "Conditions" "conditions"}}</li>
+          <li id="about">{{link-to "About" "about"}}</li>
         </ul>
         {{#if fc.isAuthenticated}}
           {{#unless fc.isLoading}}
@@ -30,4 +31,12 @@
     </div>
   </nav>
 {{outlet}}
+<div class="row">
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>Source code available at <a href="https://github.com/magic-lantern/AntimicrobialCDS">https://github.com/magic-lantern/AntimicrobialCDS</a></p>
+  <i>Source code Copyright © 2015 Seth Russell, Licensed under the Apache License, Version 2.0.</i>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</div>
 </div>
