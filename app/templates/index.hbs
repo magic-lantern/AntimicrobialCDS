@@ -18,7 +18,7 @@
       <h4>Patient Context has loaded.</h4>
       {{#unless fc.isPediatric}}
         <div class="alert alert-warning" role="alert">
-          Patient is not a pediatric patient or is missing birthdate. {{fc.isPediatric}} {{fc.patient.age_value}}
+          Patient is not a pediatric patient or has a missing/invalid birthdate.
         </div>
       {{/unless}}
     {{/unless}}
