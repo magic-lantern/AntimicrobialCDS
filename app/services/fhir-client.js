@@ -9,20 +9,7 @@ export default Ember.Service.extend({
     gender: null,
     birthDate: null,
     formatted_address: null,
-    age_value: Ember.computed('birthDate', function() {
-      console.log('13 :', this);
-      var retval = 0;
-      if (!Ember.isNone(this.birthDate)) {
-        var bday = moment(this.birthDate, ENV.APP.date_format);
-        retval = moment().diff(bday, 'years');
-        this.unit = 'years';
-        if (retval <= 2) {
-          retval = moment().diff(bday, 'months');
-          this.age_unit = 'months';
-        }
-      }
-      return retval;
-    }),
+    age_value: 0,
     age_unit: 'years',
     temp: {},
     weight: {},
@@ -32,7 +19,7 @@ export default Ember.Service.extend({
     },
     medications: [],
     allergies: [],
-    hasPenicillinAllergy: null
+    hasPenicillinAllergy: null,
   },
   patientContext: null,
   fhirclient: null,
@@ -40,6 +27,25 @@ export default Ember.Service.extend({
   isAuthenticated: false,
   isLoading: true,
   fhirFailed: false,
+  isPediatric: false,
+  birthDateChanged: Ember.observer('patient.birthDate', function() {
+    var retval = 0;
+    if (!Ember.isNone(this.patient.birthDate)) {
+      var bday = moment(this.patient.birthDate, ENV.APP.date_format);
+      retval = moment().diff(bday, 'years');
+      if (retval < 19) {
+        this.set('isPediatric', true);
+      }
+      if (retval <= 2) {
+        this.set('patient.age_value', moment().diff(bday, 'months'));
+        this.set('patient.age_unit', 'months');
+      }
+      else {
+        this.set('patient.age_value', retval);
+        this.set('patient.age_unit', 'years');
+      }
+    }
+  }),
 
   init() {
     // this not available in callbacks
@@ -57,6 +63,7 @@ export default Ember.Service.extend({
     Ember.$.ajaxSetup({cache: true});
     // calling this creates the global FHIR object
     Ember.$.getScript("https://sandbox.hspconsortium.org/dstu2/fhir-client/fhir-client.js")
+    //Ember.$.getScript("/js/fhir-client.js")
     .done(function() {
       FHIR.oauth2.ready(function (fhirclient) {
         self.set('isAuthenticated', true);

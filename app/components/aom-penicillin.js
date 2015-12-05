@@ -13,6 +13,9 @@ export default Ember.Component.extend({
        return 'mg';
      }
   }),
+  weightChanged: Ember.observer('this.fc.patient.weight.value', function() {
+    this.calculate_dose();
+  }),
   init() {
     this._super(...arguments);
     this.calculate_dose();

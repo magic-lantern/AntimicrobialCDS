@@ -9,12 +9,12 @@
       <div class="modal-body">
         <div class="container">
           <div class="modal-fixes">
-            <div class="row" id="step1">
+            <div class="row" id="strep_step1">
               <div class="col-sm-6">
                 <div class="radio">
                   <label>
                     <h4>
-                      <input type="radio" name="meets" id="meetsRadios1" value="option1" {{action 'step1_next'}}>
+                      <input type="radio" name="strepmeets" id="strepMeetsRadios1" value="option1" {{action 'step1_next' on='change'}}>
                       Matches Streptococcal pharyngitis
                     </h4>
                   </label>
@@ -39,7 +39,7 @@
                 <div class="radio">
                   <label>
                     <h4>
-                      <input type="radio" name="meets" id="meetsRadios2" value="option2" {{action 'step1_done'}}>
+                      <input type="radio" name="strepmeets" id="strepMeetsRadios2" value="option2" {{action 'step1_done' on='change'}}>
                       Matches Viral pharyngitis
                     </h4>
                   </label>
@@ -55,96 +55,101 @@
                 </ul>
               </div>
             </div>
-            <div class="row" id="step2">
+            <div class="row hidden" id="strep_step2">
               <h4>Rapid antigen detection test (RADT) result</h4>
               <p>No RADT result on file - perform test in office to proceed.</p>
               <div class="radio_group">
                 <div class="radio">
                   <label>
-                      <input type="radio" name="radt" id="radt1" value="positive" {{action 'step2_next'}}>
+                      <input type="radio" name="radt" id="radt1" value="positive" {{action 'step2_next' on='change'}}>
                       Positive
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                      <input type="radio" name="radt" id="radt2" value="negative" {{action 'step2_done'}}>
+                      <input type="radio" name="radt" id="radt2" value="negative" {{action 'step2_done' on='change'}}>
                       Negative
                   </label>
                 </div>
               </div>
             </div>
-            <div class="row" id="step3">
+            <div class="row hidden" id="strep_step3">
               <h4>Throat Culture result</h4>
               <p>No Throat Culture result on file - perform test to proceed.</p>
               <div class="radio_group">
                 <div class="radio">
                   <label>
-                      <input type="radio" name="culture" id="culture1" value="positive" {{action 'step3_next'}}>
+                      <input type="radio" name="culture" id="culture1" value="positive" {{action 'step3_next' on='change'}}>
                       Positive
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                      <input type="radio" name="culture" id="culture2" value="negative" {{action 'step3_done'}}>
+                      <input type="radio" name="culture" id="culture2" value="negative" {{action 'step3_done' on='change'}}>
                       Negative
                   </label>
                 </div>
               </div>
             </div>
-            <div id="step4" class="">
-              <div class="row">
-                <h4>Select patient medication preference</h4>
-                <div class="radio_group">
-                  <div class="radio">
-                    <label>
-                    <input type="radio" name="medication_form" id="medication_form_liquid" value="liquid" {{action 'step4' 'liquid' on='change'}}>
-                    Liquid
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                    <input type="radio" name="medication_form" id="medication_form_pill" value="pill" {{action 'step4' 'pill' on='change'}}>
-                    Pill/Tablet
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <h4>Select antibiotic</h4>
-              <p>Based on patient <span class="note">current weight {{round fc.patient.weight.value}}{{fc.patient.weight.unit}},
-                 age {{fc.patient.age_value}} {{fc.patient.age_unit}} old</span>, and known allergies, recommended option selected</p>
+            <div id="strep_step4" class="row hidden">
+              <h4>Select patient medication preference</h4>
               <div class="radio_group">
                 <div class="radio">
                   <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                  <strong>Amoxicillin: 1000mg b.i.d. for 6 days</strong>
+                  <input type="radio" name="medication_form" id="medication_form_liquid" value="liquid" {{action 'step4' 'liquid' on='change'}}>
+                  Liquid
                   </label>
                 </div>
                 <div class="radio">
                   <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                  Second Line Choice - Use if patient has taken amoxicillin in past 30 days or has conjunctivitis
-                  <strong>Amoxicillin-clavulanate: 1000mg b.i.d. for 6 days</strong>
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-                  No Antibiotic
+                  <input type="radio" name="medication_form" id="medication_form_pill" value="pill" {{action 'step4' 'pill' on='change'}}>
+                  Pill/Tablet
                   </label>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <h4>Diagnostic Criteria for Streptococcal Pharyngitis requiring antibiotics met</h4>
+            <div id="strep_step5" class="hidden">
+              <div class="row">
+                {{#if fc.patient.hasPenicillinAllergy}}
+                  <h4>Select antibiotic <small><input id="strep_forceallergy" type="checkbox" {{action 'forceallergy' on='change'}} checked> Penicillin Allergy</small></h4>
+                {{else}}
+                  <h4>Select antibiotic <small><input id="strep_forceallergy" type="checkbox" {{action 'forceallergy' on='change'}}> Penicillin Allergy</small></h4>
+                {{/if}}
+                {{#if missingWeight}}
+                  <form class="form-horizontal">
+                    <div class="form-group zeroborder">
+                      <label for="condition_datetime" class="col-sm-2 control-label">Weight</label>
+                      <div class="col-sm-4">
+                        <input id="strep_weight" class="form-control" placeholder="Patient Weight in kg" {{action 'saveweight' on='change'}}>
+                      </div>
+                      <div class="col-sm-5">
+                        <i class="text-warning">Weight required for dose calculation</i>
+                      </div>
+                    </div>
+                  </form>
+                {{else}}
+                  <p>Medication based on patient <span class="note">current weight {{round fc.patient.weight.value}}{{fc.patient.weight.unit}},
+                    age {{fc.patient.age_value}} {{fc.patient.age_unit}} old</span>, and known allergies.</p>
+                  <div class="radio_group">
+                    {{component medication form=med_form}}
+                  </div>
+                {{/if}}
+              </div>
+              <div class="row">
+                <h4>Diagnostic Criteria for Streptococcal Pharyngitis requiring antibiotics met</h4>
+              </div>
+            </div>
+            <div id="strep_criteria_not_met" class="row hidden">
+              <h4>Diagnostic Criteria for Streptococcal Pharyngitis requiring antibiotics <span class="note">not</span> met.</h4>
+              <p>Recommend close follow-up but no antibiotics. <button type="button" class="btn btn-sm btn-warning" {{action 'override'}}>Override</button></p>
+              <input id="step_override" type="text" class="form-control hidden" placeholder="Reason for override">
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Review and Sign</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="button" id="review" class="btn btn-primary pull-left hidden" data-dismiss="modal">Review and Sign</button>
+        <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
