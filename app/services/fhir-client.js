@@ -82,8 +82,8 @@ export default Ember.Service.extend({
               if(!Ember.isNone(p.address)) {
                 self.patient.formatted_address = p.address[0].line[0] + ', ' + p.address[0].city + ', ' + p.address[0].state;
               }
-              self.patient.birthDate = p.birthDate;
-              self.patient.gender = p.gender;
+              self.set('patient.birthDate', p.birthDate);
+              self.set('patient.gender', p.gender);
               self.readWeight();
               self.readTemp();
               self.readBP();
@@ -157,13 +157,23 @@ export default Ember.Service.extend({
   readMedications: function() {
     var self = this;
     self.getMedications('', function(r){
-      self.patient.medications = r;
+      self.set('patient.medications', r);
+      console.log("161: ", self.patient.medications);
     });
+  },
+  addMedication: function(input) {
+    var m = {}
+    m.display = input.display;
+    m.code = input.code;
+    m.dosageInstruction = input.dosageInstruction;
+    m.date = input.date;
+    m.duration_value = input.duration_value;
+    m.duration_unit = input.duration_unit;
+    m.refills = input.refills;
+    this.patient.medications.unshiftObject(m);
   },
   getMedications: function(code, callback, count = 5) {
     var ret = [];
-    var r = {};
-    console.log('called medications.');
     Ember.$.when(this.patientContext.api.search({
       'type': "MedicationOrder",
       // 'query': {
@@ -176,14 +186,18 @@ export default Ember.Service.extend({
           medications.data.entry.forEach(function(med) {
             if (med.resource.hasOwnProperty('medicationCodeableConcept')) {
               var m = med.resource;
-              r.display = m.medicationCodeableConcept.coding.display;
-              r.code = m.medicationCodeableConcept.coding.code;
+              var r = {};
+              r.display = m.medicationCodeableConcept.coding[0].display;
+              r.code = m.medicationCodeableConcept.coding[0].code;
               r.dosageInstruction = m.dosageInstruction[0].text;
               r.date = m.dosageInstruction[0].timing.repeat.boundsPeriod.start;
+              r.duration_value = m.dispenseRequest.expectedSupplyDuration.value;
+              r.duration_unit = m.dispenseRequest.expectedSupplyDuration.unit;
+              r.refills = m.dispenseRequest.numberOfRepeatsAllowed;
               ret.push(r);
             }
             else {
-              console.log("fhir-client - expected properties missing for code ", code);
+              console.log("fhir-client - expected properties missing for medication ", med);
             }
           });
         }

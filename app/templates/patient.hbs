@@ -39,14 +39,6 @@
       <p><strong>Aug 1, 2015</strong> - Pat visited due to increasingly severe migraines. Prescribed additional medication to help alleviate pain</p>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-5 border">
-      <button class="btn btn-default pull-right" data-toggle="modal" data-target="#aboutModal">Review</button>
-    </div>
-    <div class="col-md-6 border">
-      <button class="btn btn-default pull-right" data-toggle="modal" data-target="#aboutModal">Modify</button>
-    </div>
-  </div>
 </div>
 
 <div class="container">
@@ -99,25 +91,21 @@
 
     <div class="col-md-5">
       <h3>Medication History</h3>
-
-      <div class="row bg-infolight-b">
-        <strong>Lisinopril</strong> 40 MG Oral Tablet
+      {{medication-list meds=fc.patient.medications index=0 highlight_color='bg-infolight-b'}}
+      {{medication-list meds=fc.patient.medications index=1 highlight_color='bg-infolight-a'}}
+      {{medication-list meds=fc.patient.medications index=2 highlight_color='bg-infolight-b'}}
+      {{medication-list meds=fc.patient.medications index=3 highlight_color='bg-infolight-a'}}
+      {{medication-list meds=fc.patient.medications index=4 highlight_color='bg-infolight-b'}}
+      <div class="row info">
+        {{#if fc.patient.medications}}
+        Total Medications: {{fc.patient.medications.length}}
+        {{else}}
+        <p>No Medication History</p>
+        {{/if}}
       </div>
-
-      <div class="row bg-infolight-a">
-        <strong>Diltiazem Hydrochloride</strong> 180 MG Extended Release Oral Tablet
-      </div>
-
-      <div class="row bg-infolight-b">
-        <strong>Divalproex</strong> Sodium 300 MG
-      </div>
-
-      <div class="row bg-infolight-a">
-        <strong>Simvastatin</strong> 40 MG [Zocor]
-      </div>
-
-      <div class="row bg-infolight-b">
-        <strong>Levofloxacin</strong> 500 MG Oral Tablet
+      <div class="row">
+        <p>&nbsp;</p>
+        {{link-to "Medications" "medicationorders" class="btn btn-default pull-right"}}
       </div>
 
     </div>
