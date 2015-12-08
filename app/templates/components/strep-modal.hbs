@@ -135,14 +135,16 @@
                   </div>
                 {{/if}}
               </div>
+              {{#unless isOverride}}
               <div class="row">
                 <h4>Diagnostic Criteria for Streptococcal Pharyngitis requiring antibiotics met</h4>
               </div>
+              {{/unless}}
             </div>
             <div id="strep_criteria_not_met" class="row hidden">
               <h4>Diagnostic Criteria for Streptococcal Pharyngitis requiring antibiotics <span class="note">not</span> met.</h4>
               <p>Recommend close follow-up but no antibiotics. <button type="button" class="btn btn-sm btn-warning" {{action 'override'}}>Override</button></p>
-              <input id="step_override" type="text" class="form-control hidden" placeholder="Reason for override">
+              <input id="strep_override" type="text" class="form-control hidden" placeholder="Reason for override" {{action 'forcemedication' on='change'}}>
             </div>
           </div>
         </div>

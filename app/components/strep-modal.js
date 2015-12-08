@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   med_form: null,
   medication_callback: null,
   medication: {},
+  isOverride: false,
   medicationselection: Ember.computed('fc.patient.hasPenicillinAllergy', function() {
      if (!Ember.isNone(this.fc.patient.hasPenicillinAllergy) && this.fc.patient.hasPenicillinAllergy) {
        return `strep-non-penicillin`;
@@ -41,12 +42,17 @@ export default Ember.Component.extend({
       Ember.$('#strep_step' + step_num).addClass('hidden');
     }
   },
+  hide_override() {
+    Ember.$('#strep_override').addClass('hidden');
+    this.set('isOverride', false);
+    Ember.$('#strep_override').val('');
+  },
   actions: {
     step1_next() {
       this.toggle_next_steps(1);
       Ember.$('#strep_criteria_not_met').addClass('hidden');
       Ember.$('#strep_review').addClass('hidden');
-      Ember.$('#strep_override').addClass('hidden');
+      this.hide_override();
       this.uncheck_steps(1);
     },
     step1_done() {
@@ -62,7 +68,7 @@ export default Ember.Component.extend({
       Ember.$('#strep_step5').addClass('hidden');
       Ember.$('#strep_criteria_not_met').addClass('hidden');
       Ember.$('#strep_review').addClass('hidden');
-      Ember.$('#strep_override').addClass('hidden');
+      this.hide_override();
       this.uncheck_steps(2);
     },
     step2_done() {
@@ -71,7 +77,7 @@ export default Ember.Component.extend({
       Ember.$('#strep_step5').addClass('hidden');
       Ember.$('#strep_criteria_not_met').addClass('hidden');
       Ember.$('#strep_review').removeClass('hidden');
-      Ember.$('#strep_override').addClass('hidden');
+      this.hide_override();
       this.uncheck_steps(2);
     },
     step3_next() {
@@ -80,7 +86,7 @@ export default Ember.Component.extend({
       Ember.$('#strep_step5').addClass('hidden');
       Ember.$('#strep_criteria_not_met').addClass('hidden');
       Ember.$('#strep_review').addClass('hidden');
-      Ember.$('#strep_override').addClass('hidden');
+      this.hide_override();
       this.uncheck_steps(3);
     },
     step3_done() {
@@ -112,6 +118,17 @@ export default Ember.Component.extend({
       }
       else {
         this.set('fc.patient.hasPenicillinAllergy', false);
+      }
+    },
+    forcemedication() {
+      if (!Ember.isEmpty(Ember.$('#strep_override').val())) {
+        console.log('override value provided, need to show medication options');
+        Ember.$('#strep_step5').removeClass('hidden');
+        this.set('isOverride', true);
+      }
+      else {
+        Ember.$('#strep_step5').addClass('hidden');
+        this.set('isOverride', false);
       }
     },
     saveweight() {

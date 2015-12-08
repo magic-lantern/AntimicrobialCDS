@@ -138,14 +138,16 @@
               <div class="row">
                 <p>NOTE: Azithromycin is NOT recommended due to antibiotic resistance.</p>
               </div>
+              {{#unless isOverride}}
               <div class="row">
                 <h4>Diagnostic Criteria for Acute Otitis Media requiring antibiotics met</h4>
               </div>
+              {{/unless}}
             </div>
             <div id="aom_criteria_not_met" class="row hidden">
               <h4>Diagnostic Criteria for Acute Otitis Media requiring antibiotics <span class="note">not</span> met.</h4>
               <p>Recommend close follow-up but no antibiotics. <button type="button" class="btn btn-sm btn-warning" {{action 'override'}}>Override</button></p>
-              <input id="aom_override" type="text" class="form-control hidden" placeholder="Reason for override">
+              <input id="aom_override" type="text" class="form-control hidden" placeholder="Reason for override" {{action 'forcemedication' on='change'}}>
             </div>
           </div>
         </div>
