@@ -1,24 +1,24 @@
 <div class="radio">
   <label>
-  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios1" value="option1" {{action 'step5'}} checked>
-  <strong>Cefdinir: {{cefdinir_dose}}{{unit}} b.i.d. for {{duration}}</strong>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios4" value="option4" {{action 'step5' 'cefdinir' on='change'}} checked>
+  <strong>Cefdinir{{type}}: {{cefdinir_dose}}{{unit}} b.i.d. for {{duration}}</strong>
   </label>
 </div>
 <div class="radio">
   <label>
-  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios2" value="option2" {{action 'step5'}}>
-  Second Line Choice - <strong>Cefuroxime: {{cefuroxime_dose}}{{unit}} b.i.d. for {{duration}}</strong>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios5" value="option5" {{action 'step5' 'cefuroxime' on='change'}}>
+  Second Line Choice - <strong>Cefuroxime{{type}}: {{cefuroxime_dose}}{{unit}} b.i.d. for {{duration}}</strong>
   </label>
 </div>
 <div class="radio">
   <label>
-  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios3" value="option3" {{action 'step5'}}>
-  Second Line Choice - <strong>Cefpodoxime: {{cefpodoxime_dose}}{{unit}} b.i.d. for {{duration}}</strong>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios6" value="option6" {{action 'step5' 'cefpodoxime' on='change'}}>
+  Second Line Choice - <strong>Cefpodoxime{{type}}: {{cefpodoxime_dose}}{{unit}} b.i.d. for {{duration}}</strong>
   </label>
 </div>
 <div class="radio">
   <label>
-  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios4" value="option4" {{action 'step5'}}>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios7" value="option7" {{action 'step5' on='change'}}>
   No Antibiotic
   </label>
 </div>

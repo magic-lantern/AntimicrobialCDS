@@ -1,19 +1,19 @@
 <div class="radio">
   <label>
-  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios1" value="option1" {{action 'step5'}} checked>
-  <strong>Amoxicillin: {{min_dose}}{{unit}} b.i.d. for {{duration}}</strong>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios1" value="option1" {{action 'step5' 'amoxicillin' on='change'}} checked>
+  <strong>Amoxicillin{{type}}: {{dose}}{{unit}} b.i.d. for {{duration_value}} {{duration_unit}}</strong>
   </label>
 </div>
 <div class="radio">
   <label>
-  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios2" value="option2" {{action 'step5'}}>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios2" value="option2" {{action 'step5' 'amoxicillin-clavulanate' on='change'}}>
   Second Line Choice - Use if patient has taken amoxicillin in past 30 days or has conjunctivitis
-  <strong>Amoxicillin-clavulanate: {{min_dose}}{{unit}} b.i.d. for {{duration}}</strong>
+  <strong>Amoxicillin-clavulanate{{type}}: {{dose}}{{unit}} b.i.d. for {{duration_value}} {{duration_unit}}</strong>
   </label>
 </div>
 <div class="radio">
   <label>
-  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios3" value="option3" {{action 'step5'}}>
+  <input type="radio" name="medicationOptionsRadios" id="medicationOptionsRadios3" value="option3" {{action 'step5' on='change' }}>
   No Antibiotic
   </label>
 </div>

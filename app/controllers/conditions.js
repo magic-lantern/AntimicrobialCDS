@@ -2,6 +2,7 @@ import Ember from 'ember';
 import ENV from '../config/environment';
 
 export default Ember.Controller.extend({
+  medication: {},
   actions: {
     fire_cds() {
       var diagnosis = Ember.$('#condition_diagnosis').val();
@@ -18,6 +19,14 @@ export default Ember.Controller.extend({
           console.log("unknown SNOMED-CT code.");
         }
       }
+    },
+    medication_callback: function(med) {
+      console.log('medication : ', med);
+      this.set('medication', med);
+    },
+    clearall: function() {
+      this.set('medication', {});
+      Ember.$('#condition_form').trigger('reset');
     }
   }
 });

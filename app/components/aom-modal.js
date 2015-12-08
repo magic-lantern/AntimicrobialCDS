@@ -5,7 +5,9 @@ import ENV from '../config/environment';
 export default Ember.Component.extend({
   total_steps: 5,
   med_form: null,
-  medication: Ember.computed('fc.patient.hasPenicillinAllergy', function() {
+  medication_callback: null,
+  medication: {},
+  medicationselection: Ember.computed('fc.patient.hasPenicillinAllergy', function() {
      if (!Ember.isNone(this.fc.patient.hasPenicillinAllergy) && this.fc.patient.hasPenicillinAllergy) {
        return `aom-non-penicillin`;
      }
@@ -17,7 +19,7 @@ export default Ember.Component.extend({
     return (this.fc.patient.temp.value > ENV.APP.aom_temp_threshold);
   }),
   missingWeight: Ember.computed('this.fc.patient.weight.value', function() {
-     if (Ember.isNone(this.fc.patient.weight.value) || (this.fc.patient.weight.value == 'No Observation')) {
+     if (Ember.isNone(this.fc.patient.weight.value) || (this.fc.patient.weight.value === 'No Observation')) {
        return true;
      }
      return false;
@@ -95,6 +97,8 @@ export default Ember.Component.extend({
       this.uncheck_steps(4);
     },
     step5(med) {
+      console.log("98 aom-modal step 5. med: ", med);
+      this.set('medication', med);
       Ember.$('#aom_review').removeClass('hidden');
       Ember.$('#aom_override').addClass('hidden');
     },
@@ -113,6 +117,11 @@ export default Ember.Component.extend({
       this.set('fc.patient.weight.value', parseInt(Ember.$('#aom_weight').val()));
       this.set('fc.patient.weight.unit', 'kg');
       this.set('fc.patient.weight.date', moment().format(ENV.APP.date_format));
+    },
+    save() {
+      console.log("aom-modal need to pass medication back to condition page");
+      this.get('medication_callback')(this.get('medication'));
+      Ember.$('#AOMModal').modal('hide');
     }
   }
 });

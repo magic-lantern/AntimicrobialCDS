@@ -162,7 +162,7 @@ export default Ember.Service.extend({
     });
   },
   addMedication: function(input) {
-    var m = {}
+    var m = {};
     m.display = input.display;
     m.code = input.code;
     m.dosageInstruction = input.dosageInstruction;

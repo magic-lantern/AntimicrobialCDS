@@ -1,13 +1,13 @@
-{{aom-modal}}
+{{aom-modal medication_callback=(action 'medication_callback')}}
 
-{{strep-modal}}
+{{strep-modal medication_callback=(action 'medication_callback')}}
 
-<form class="form-horizontal">
+<form id="condition_form" class="form-horizontal">
 
   <div class="form-group">
     <label for="condition_datetime" class="col-sm-2 control-label">Date</label>
     <div class="col-sm-5">
-      <input type="datetime" class="form-control" placeholder="Now">
+      <input id="condition_date" type="datetime" class="form-control" placeholder="Now">
     </div>
   </div>
 
@@ -25,15 +25,24 @@
   </div>
 
   <div class="form-group">
-    <label for="condition_notes" class="col-sm-2 control-label">Clinical Note</label>
+    <label for="condition_notes" class="col-sm-2 control-label">Clinical Notes</label>
     <div class="col-sm-10">
       <textarea id="condition_notes" class="form-control" rows="3" placeholder="Enter Notes here."></textarea>
     </div>
   </div>
 
+  {{#if medication.display}}
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-5">
+      <strong>CDS Assigned Medication</strong>
+      <p>{{medication.display}}, {{medication.dosageInstruction}}, {{medication.duration_value}} {{medication.duration_unit}}</p>
+    </div>
+  </div>
+  {{/if}}
+
   <div class="form-group">
       <div class="col-sm-offset-2 col-sm-2">
-        <button type="reset" class="btn btn-danger">Reset Form</button>
+        <button type="reset" class="btn btn-danger" {{action 'clearall'}}>Reset Form</button>
       </div>
       <div class="col-sm-3 pull-right">
         <button type="submit" class="btn btn-success">Sign &amp; Submit</button>
