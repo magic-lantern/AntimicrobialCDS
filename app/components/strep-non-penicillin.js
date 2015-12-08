@@ -1,25 +1,26 @@
 import Ember from 'ember';
+import ENV from '../config/environment';
 
 export default Ember.Component.extend({
   cephalexin_dose: 0,
-  cephalexin_duration: null,
+  cephalexin_duration_value: null,
   cephalexin_frequency: null,
   azithromycin_dose: 0,
-  azithromycin_duration: null,
+  azithromycin_duration_value: null,
   azithromycin_frequency: null,
   clindamycin_dose: 0,
-  clindamycin_duration: null,
+  clindamycin_duration_value: null,
   clindamycin_frequency: null,
+  duration_unit: 'days',
   form: null,
   unit: 'mg',
+  medication_callback: null,
   weightChanged: Ember.observer('this.fc.patient.weight.value', function() {
     this.calculate_dose();
-    console.log('17 called recalculate dose')
   }),
   init() {
     this._super(...arguments);
     this.calculate_dose();
-    console.log('unit: ', this.unit);
   },
   calculate_dose() {
     var dose = 0;
@@ -30,10 +31,10 @@ export default Ember.Component.extend({
         this.set('cephalexin_dose', 500);
       }
       else {
-        this.set('cephalexin_dose', dose);
+        this.set('cephalexin_dose', (125.0 * Math.round(dose/125.0)));
       }
     }
-    this.set('cephalexin_duration', '10 days');
+    this.set('cephalexin_duration_value', '10');
     this.set('cephalexin_frequency', 'b.i.d.');
 
     // Azithromycin calculation
@@ -43,10 +44,10 @@ export default Ember.Component.extend({
         this.set('azithromycin_dose', 500);
       }
       else {
-        this.set('azithromycin_dose', dose);
+        this.set('azithromycin_dose', (125.0 * Math.round(dose/125.0)));
       }
     }
-    this.set('azithromycin_duration', '5 days');
+    this.set('azithromycin_duration_value', '5');
     this.set('azithromycin_frequency', 'once daily');
 
     // Clindamycin calculation
@@ -56,10 +57,30 @@ export default Ember.Component.extend({
         this.set('clindamycin_dose', 300);
       }
       else {
-        this.set('clindamycin_dose', dose);
+        this.set('clindamycin_dose', (150.0 * Math.round(dose/150.0)));
       }
     }
     this.set('clindamycin_frequency', '3 times daily');
-    this.set('clindamycin_duration', '10 days');
+    this.set('clindamycin_duration_value', '10');
   },
+  actions: {
+    step5(med){
+      console.log("68 - strep-non-penicillin step5 action. med: ", med);
+      if (!Ember.isNone(med)) {
+        var display = med[0].toUpperCase() + med.slice(1) + ' ' + this.get(med + '_dose') + this.get('unit');
+        this.get('medication_callback')({
+          display: display,
+          code: 'code',
+          dosageInstruction: this.get(med + '_frequency'),
+          date: moment().format(ENV.APP.date_format),
+          duration_value: this.get(med + '_duration_value'),
+          duration_unit: this.get('duration_unit'),
+          refills: 1,
+        });
+      }
+      else {
+        this.get('medication_callback')({});
+      }
+    }
+  }
 });

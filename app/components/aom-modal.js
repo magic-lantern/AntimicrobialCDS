@@ -97,7 +97,6 @@ export default Ember.Component.extend({
       this.uncheck_steps(4);
     },
     step5(med) {
-      console.log("98 aom-modal step 5. med: ", med);
       this.set('medication', med);
       Ember.$('#aom_review').removeClass('hidden');
       Ember.$('#aom_override').addClass('hidden');
@@ -119,7 +118,6 @@ export default Ember.Component.extend({
       this.set('fc.patient.weight.date', moment().format(ENV.APP.date_format));
     },
     save() {
-      console.log("aom-modal need to pass medication back to condition page");
       this.get('medication_callback')(this.get('medication'));
       Ember.$('#AOMModal').modal('hide');
     }

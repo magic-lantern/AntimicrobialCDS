@@ -5,7 +5,9 @@ import ENV from '../config/environment';
 export default Ember.Component.extend({
   total_steps: 5,
   med_form: null,
-  medication: Ember.computed('fc.patient.hasPenicillinAllergy', function() {
+  medication_callback: null,
+  medication: {},
+  medicationselection: Ember.computed('fc.patient.hasPenicillinAllergy', function() {
      if (!Ember.isNone(this.fc.patient.hasPenicillinAllergy) && this.fc.patient.hasPenicillinAllergy) {
        return `strep-non-penicillin`;
      }
@@ -97,6 +99,7 @@ export default Ember.Component.extend({
       this.uncheck_steps(4);
     },
     step5(med) {
+      this.set('medication', med);
       Ember.$('#strep_review').removeClass('hidden');
       Ember.$('#strep_override').addClass('hidden');
     },
@@ -115,6 +118,11 @@ export default Ember.Component.extend({
       this.set('fc.patient.weight.value', parseInt(Ember.$('#strep_weight').val()));
       this.set('fc.patient.weight.unit', 'kg');
       this.set('fc.patient.weight.date', moment().format(ENV.APP.date_format));
+    },
+    save() {
+      console.log("strep need to pass medication back to condition page");
+      this.get('medication_callback')(this.get('medication'));
+      Ember.$('#StrepModal').modal('hide');
     }
   }
 });

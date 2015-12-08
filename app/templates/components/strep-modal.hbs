@@ -131,7 +131,7 @@
                   <p>Medication based on patient <span class="note">current weight {{round fc.patient.weight.value}}{{fc.patient.weight.unit}},
                     age {{fc.patient.age_value}} {{fc.patient.age_unit}} old</span>, and known allergies.</p>
                   <div class="radio_group">
-                    {{component medication form=med_form}}
+                    {{component medicationselection form=med_form medication_callback=(action 'step5')}}
                   </div>
                 {{/if}}
               </div>
@@ -148,8 +148,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="cancel" class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
-        <button type="button" id="review" class="btn btn-primary hidden" data-dismiss="modal">Review</button>
+        <button type="button" id="strep_cancel" class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
+        <button type="button" id="strep_review" class="btn btn-primary hidden" {{action 'save'}}>Review</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

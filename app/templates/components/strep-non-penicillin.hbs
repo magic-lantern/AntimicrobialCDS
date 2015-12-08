@@ -1,24 +1,24 @@
 <div class="radio">
   <label>
-  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios1" value="option1" {{action 'step5'}}>
-  <strong>Cephalexin: {{cephalexin_dose}}{{unit}} {{cephalexin_frequency}} for {{cephalexin_duration}}</strong>
+  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios1" value="option1" {{action 'step5' 'cephalexin' on='change'}}>
+  <strong>Cephalexin: {{cephalexin_dose}}{{unit}} {{cephalexin_frequency}} for {{cephalexin_duration_value}} {{duration_unit}}</strong>
   </label>
 </div>
 <div class="radio">
   <label>
-  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios2" value="option2" {{action 'step5'}}>
-  <strong>Azithromycin: {{azithromycin_dose}}{{unit}} {{azithromycin_frequency}} for {{azithromycin_duration}}</strong>
+  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios2" value="option2" {{action 'step5' 'azithromycin' on='change'}}>
+  <strong>Azithromycin: {{azithromycin_dose}}{{unit}} {{azithromycin_frequency}} for {{azithromycin_duration_value}} {{duration_unit}}</strong>
   </label>
 </div>
 <div class="radio">
   <label>
-  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios3" value="option3" {{action 'step5'}}>
-  <strong>Clindamycin: {{clindamycin_dose}}{{unit}} {{clindamycin_frequency}} for {{clindamycin_duration}}</strong>
+  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios3" value="option3" {{action 'step5' 'clindamycin' on='change'}}>
+  <strong>Clindamycin: {{clindamycin_dose}}{{unit}} {{clindamycin_frequency}} for {{clindamycin_duration_value}} {{duration_unit}}</strong>
   </label>
 </div>
 <div class="radio">
   <label>
-  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios4" value="option4" {{action 'step5'}}>
+  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios4" value="option4" {{action 'step5' on='change'}}>
   No Antibiotic
   </label>
 </div>

@@ -1,27 +1,27 @@
 {{#if needsLiquid}}
   <div class="radio">
     <label>
-    <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios3" value="option3" {{action 'step5'}} checked>
-    <strong>Amoxicillin suspension: {{suspension_dose}}{{unit}} once daily for 10 days</strong>
+    <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios3" value="option3" {{action 'step5' 'Amoxicillin suspension' on='change'}} checked>
+    <strong>Amoxicillin suspension: {{suspension_dose}}{{suspension_unit}} once daily for 10 days</strong>
     </label>
   </div>
 {{else}}
   <div class="radio">
     <label>
-    <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios1" value="option1" {{action 'step5'}}>
-    <strong>Penicillin VK: {{penicillin_dose}}{{penicillin_unit}} for {{penicillin_duration}}</strong>
+    <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios1" value="option1" {{action 'step5' 'Penicillin VK' on='change'}}>
+    <strong>Penicillin VK: {{penicillin_dose}}{{penicillin_unit}} b.i.d for {{penicillin_duration}}</strong>
     </label>
   </div>
   <div class="radio">
     <label>
-    <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios2" value="option2" {{action 'step5'}}>
+    <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios2" value="option2" {{action 'step5' 'Benzathine penicillin' on='change'}}>
     <strong>Benzathine penicillin: {{benzathine_dose}}{{benzathine_unit}} {{benzathine_duration}}</strong>
     </label>
   </div>
 {{/if}}
 <div class="radio">
   <label>
-  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios4" value="option4" {{action 'step5'}}>
+  <input type="radio" name="strep_medicationOptionsRadios" id="strep_medicationOptionsRadios4" value="option4" {{action 'step5' on='change'}}>
   No Antibiotic
   </label>
 </div>
