@@ -20,7 +20,7 @@ export default Ember.Component.extend({
     return (this.fc.patient.temp.value > ENV.APP.strep_temp_threshold);
   }),
   missingWeight: Ember.computed('this.fc.patient.weight.value', function() {
-     if (Ember.isNone(this.fc.patient.weight.value) || (this.fc.patient.weight.value == 'No Observation')) {
+     if (Ember.isNone(this.fc.patient.weight.value) || (this.fc.patient.weight.value === 'No Observation')) {
        return true;
      }
      return false;
