@@ -138,11 +138,15 @@
     </div>
     <div class="col-md-5">
       <h3>Allergies</h3>
-
+      {{#if fc.patient.hasPenicillinAllergy}}
       <div class="row bg-infolight-b">
-        <strong>Penicillin</strong> Severe; anaphylactic reaction
+        <strong>Penicillin</strong>
       </div>
-
+      {{else}}
+      <div class="row info">
+        No relevant allergies
+      </div>
+      {{/if}}
     </div>
   </div>
 </div>
