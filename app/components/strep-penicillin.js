@@ -7,7 +7,8 @@ export default Ember.Component.extend({
   penicillin_duration: '10 days',
   benzathine_dose: 0,
   benzathine_unit: 'IU IM',
-  benzathine_duration: 'x 1 dose',
+  benzathine_duration_value: 'x 1',
+  benzathine_duration_unit: 'dose',
   suspension_dose: 0,
   suspension_unit: 'mg',
   form: null,
@@ -89,8 +90,8 @@ export default Ember.Component.extend({
             code: 'code',
             dosageInstruction: '1 dose',
             date: moment().format(ENV.APP.date_format),
-            duration_value: '',
-            duration_unit: '',
+            duration_value: this.get('benzathine_duration_value'),
+            duration_unit: this.get('benzathine_duration_unit'),
             refills: 1,
           });
         }

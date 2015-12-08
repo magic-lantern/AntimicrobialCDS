@@ -100,7 +100,9 @@ export default Ember.Component.extend({
     step4(med_form) {
       this.set('med_form', med_form);
       Ember.$('#strep_step5').removeClass('hidden');
-      Ember.$('#strep_criteria_not_met').addClass('hidden');
+      if (! this.isOverride) {
+        Ember.$('#strep_criteria_not_met').addClass('hidden');
+      }
       Ember.$('#strep_override').addClass('hidden');
       this.uncheck_steps(4);
     },
@@ -123,10 +125,11 @@ export default Ember.Component.extend({
     forcemedication() {
       if (!Ember.isEmpty(Ember.$('#strep_override').val())) {
         console.log('override value provided, need to show medication options');
-        Ember.$('#strep_step5').removeClass('hidden');
+        Ember.$('#strep_step4').removeClass('hidden');
         this.set('isOverride', true);
       }
       else {
+        Ember.$('#strep_step4').addClass('hidden');
         Ember.$('#strep_step5').addClass('hidden');
         this.set('isOverride', false);
       }

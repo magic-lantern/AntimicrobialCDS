@@ -57,7 +57,7 @@ export default Ember.Service.extend({
       self.set('fhirFailed', true);
       self.set('isLoading', false);
       self.loadPatient('demo');
-    }, 2000);
+    }, 5000);
 
     // this line prevents the addition of a timestamp to the fhir-client.js file
     Ember.$.ajaxSetup({cache: true});

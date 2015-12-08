@@ -52,12 +52,12 @@ export default Ember.Component.extend({
 
     // Clindamycin calculation
     if (this.fc.patient.weight.unit === 'kg') {
-      dose = (this.fc.patient.weight.value * 7)/3;
-      if (dose > 300) {
+      dose = (this.fc.patient.weight.value * 7);
+      if ((dose * 3) > 900) {
         this.set('clindamycin_dose', 300);
       }
       else {
-        this.set('clindamycin_dose', (150.0 * Math.round(dose/150.0)));
+        this.set('clindamycin_dose', (50.0 * Math.round(dose/50.0)));
       }
     }
     this.set('clindamycin_frequency', '3 times daily');
@@ -65,7 +65,6 @@ export default Ember.Component.extend({
   },
   actions: {
     step5(med){
-      console.log("68 - strep-non-penicillin step5 action. med: ", med);
       if (!Ember.isNone(med)) {
         var display = med[0].toUpperCase() + med.slice(1) + ' ' + this.get(med + '_dose') + this.get('unit');
         this.get('medication_callback')({

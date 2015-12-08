@@ -97,9 +97,10 @@ export default Ember.Component.extend({
     step4(med_form) {
       this.set('med_form', med_form);
       Ember.$('#aom_step5').removeClass('hidden');
-      Ember.$('#aom_criteria_not_met').addClass('hidden');
+      if (! this.isOverride) {
+        Ember.$('#aom_criteria_not_met').addClass('hidden');
+      }
       Ember.$('#aom_review').removeClass('hidden');
-      this.hide_override();
       this.uncheck_steps(4);
     },
     step5(med) {
@@ -120,10 +121,11 @@ export default Ember.Component.extend({
     },
     forcemedication() {
       if (!Ember.isEmpty(Ember.$('#aom_override').val())) {
-        Ember.$('#aom_step5').removeClass('hidden');
+        Ember.$('#aom_step4').removeClass('hidden');
         this.set('isOverride', true);
       }
       else {
+        Ember.$('#aom_step4').addClass('hidden');
         Ember.$('#aom_step5').addClass('hidden');
         this.set('isOverride', false);
       }
