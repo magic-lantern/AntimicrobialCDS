@@ -27,6 +27,12 @@ export default Ember.Controller.extend({
     clearall: function() {
       this.set('medication', {});
       Ember.$('#condition_form').trigger('reset');
+    },
+    save: function() {
+      if(!Ember.isNone(this.medication)){
+        this.fc.addMedication(this.medication);
+      }
+      this.send('clearall');
     }
   }
 });
