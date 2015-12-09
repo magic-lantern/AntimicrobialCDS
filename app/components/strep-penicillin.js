@@ -50,7 +50,7 @@ export default Ember.Component.extend({
       var dose = this.fc.patient.weight.value * 50;
       console.log('this.fc.patient.weight.value :', this.fc.patient.weight.value);
       console.log('dose :', dose);
-      if (dose > 1000) {
+      if (dose >= 1000) {
         this.set('suspension_dose', 1000);
       }
       else {

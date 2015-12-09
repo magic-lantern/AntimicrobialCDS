@@ -27,7 +27,7 @@ export default Ember.Component.extend({
     // Cephalexin calculation
     if (this.fc.patient.weight.unit === 'kg') {
       dose = (this.fc.patient.weight.value * 20)/2;
-      if (dose > 500) {
+      if (dose >= 500) {
         this.set('cephalexin_dose', 500);
       }
       else {
@@ -40,7 +40,7 @@ export default Ember.Component.extend({
     // Azithromycin calculation
     if (this.fc.patient.weight.unit === 'kg') {
       dose = (this.fc.patient.weight.value * 12);
-      if (dose > 500) {
+      if (dose >= 500) {
         this.set('azithromycin_dose', 500);
       }
       else {
@@ -53,7 +53,7 @@ export default Ember.Component.extend({
     // Clindamycin calculation
     if (this.fc.patient.weight.unit === 'kg') {
       dose = (this.fc.patient.weight.value * 7);
-      if ((dose * 3) > 900) {
+      if ((dose * 3) >= 900) {
         this.set('clindamycin_dose', 300);
       }
       else {
@@ -66,7 +66,7 @@ export default Ember.Component.extend({
   actions: {
     step5(med){
       if (!Ember.isNone(med)) {
-        var display = med[0].toUpperCase() + med.slice(1) + ' ' + this.get(med + '_dose') + this.get('unit');
+        var display = med.capitalize() + ' ' + this.get(med + '_dose') + this.get('unit');
         this.get('medication_callback')({
           display: display,
           code: 'code',

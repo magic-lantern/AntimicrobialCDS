@@ -19,6 +19,7 @@ export default Ember.Service.extend({
     },
     medications: [],
     allergies: [],
+    conditions: [],
     hasPenicillinAllergy: null,
   },
   patientContext: null,
@@ -88,7 +89,8 @@ export default Ember.Service.extend({
               self.readTemp();
               self.readBP();
               self.readMedications();
-              //self.getConditions();
+              self.readAllergies();
+              self.readConditions();
               clearTimeout(timeout);
               self.set('isLoading', false);
             });
@@ -158,7 +160,19 @@ export default Ember.Service.extend({
     var self = this;
     self.getMedications('', function(r){
       self.set('patient.medications', r);
-      console.log("161: ", self.patient.medications);
+    });
+  },
+  readAllergies: function() {
+    var self = this;
+    self.getAllergies('', function(r){
+      self.set('patient.allergies', r);
+    });
+  },
+  readConditions: function() {
+    var self = this;
+    self.getConditions('', function(r){
+      self.set('patient.conditions', r);
+      console.log('conditions: ', self.get('patient.conditions'));
     });
   },
   addMedication: function(input) {
@@ -172,7 +186,7 @@ export default Ember.Service.extend({
     m.refills = input.refills;
     this.patient.medications.unshiftObject(m);
   },
-  getMedications: function(code, callback, count = 5) {
+  getMedications: function(code, callback, count = 20) {
     var ret = [];
     Ember.$.when(this.patientContext.api.search({
       'type': "MedicationOrder",
@@ -190,10 +204,14 @@ export default Ember.Service.extend({
               r.display = m.medicationCodeableConcept.coding[0].display;
               r.code = m.medicationCodeableConcept.coding[0].code;
               r.dosageInstruction = m.dosageInstruction[0].text;
-              r.date = m.dosageInstruction[0].timing.repeat.boundsPeriod.start;
-              r.duration_value = m.dispenseRequest.expectedSupplyDuration.value;
-              r.duration_unit = m.dispenseRequest.expectedSupplyDuration.unit;
-              r.refills = m.dispenseRequest.numberOfRepeatsAllowed;
+              if (!Ember.isNone(m.dosageInstruction[0].timing)) {
+                r.date = m.dosageInstruction[0].timing.repeat.boundsPeriod.start;
+              }
+              if (!Ember.isNone(m.dispenseRequest)) {
+                r.duration_value = m.dispenseRequest.expectedSupplyDuration.value;
+                r.duration_unit = m.dispenseRequest.expectedSupplyDuration.unit;
+                r.refills = m.dispenseRequest.numberOfRepeatsAllowed;
+              }
               ret.push(r);
             }
             else {
@@ -206,19 +224,58 @@ export default Ember.Service.extend({
         }
     });
   },
-  getConditions: function() {
-    var self = this;
-    console.log("this.patientContext : ", self.patientContext);
-    setTimeout(function() {
-      console.log("this.patientContext : ", self.patientContext);
-      self.patientContext.Condition
-        .where
-        .code('102594003')
-        .search()
-        .then(function(conds){
-          console.log("Conditions: ", conds);
-      });
-    }, 3000);
+  getConditions: function(code, callback, count = 20) {
+    var ret = [];
+    Ember.$.when(this.patientContext.api.search({
+      'type': "Condition",
+      // 'query': {
+      //   'code': code,
+      //   '_sort:desc':'onsetDateTime'},
+      'count': count}))
+      .done(function(conditions) {
+        console.log('conditions: ', conditions);
+        if (!Ember.isNone(conditions.data.entry)) {
+          conditions.data.entry.forEach(function(condition) {
+            var c = condition.resource;
+            var r = {};
+            r.code = c.code.coding[0].code;
+            r.text = c.code.text;
+            r.date = c.onsetDateTime;
+            ret.push(r);
+          });
+        }
+        if (typeof callback === 'function') {
+          callback(ret);
+        }
+    });
+  },
+  getAllergies: function(code, callback, count = 20) {
+    var ret = [];
+    Ember.$.when(this.patientContext.api.search({
+      'type': "AllergyIntolerance",
+      // 'query': {
+      //   'code': code,
+      //   '_sort:desc':'date'},
+      'count': count}))
+      .done(function(allergies) {
+        console.log('allergies: ', allergies);
+        if (!Ember.isNone(allergies.data.entry)) {
+          allergies.data.entry.forEach(function(allergy) {
+            var a = allergy.resource;
+            var r = {};
+            r.severity = a.reaction[0].severity;
+            r.manifestation = a.reaction[0].manifestation[0].text;
+            r.category = a.category;
+            r.date = a.recordedDate;
+            r.substance = a.substance.text;
+            r.text = a.text.div;
+            ret.push(r);
+          });
+        }
+        if (typeof callback === 'function') {
+          callback(ret);
+        }
+    });
   },
   loadPatient: function(patient) {
     if(patient === 'demo') {
@@ -249,6 +306,19 @@ export default Ember.Service.extend({
           unit: 'mmHg'
         }
       });
+      this.set('patient.conditions', [{
+        code: '426656000',
+        text: 'Severe persistent asthma',
+        date: '2010/01/01',
+      }]);
+      this.set('patient.allergies', [{
+        severity: 'severe',
+        manifestation: 'anaphylaxis',
+        category: 'medication',
+        date: '2010/01/01',
+        substance: 'Penicillin',
+        text: 'Severe Penicillin Allergy',
+      }]);
       this.set('patient.hasPenicillinAllergy', true);
     }
   }

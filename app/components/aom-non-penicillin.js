@@ -30,7 +30,7 @@ export default Ember.Component.extend({
     // Cefdinir calculation
     if (this.fc.patient.weight.unit === 'kg') {
       dose = (this.fc.patient.weight.value * 14)/2;
-      if (dose > 300) {
+      if (dose >= 300) {
         this.set('cefdinir_dose', 300);
       }
       else {
@@ -41,7 +41,7 @@ export default Ember.Component.extend({
     // Cefuroxime calculation
     if (this.fc.patient.weight.unit === 'kg') {
       dose = (this.fc.patient.weight.value * 30)/2;
-      if (dose > 500) {
+      if (dose >= 500) {
         this.set('cefuroxime_dose', 500);
       }
       else {
@@ -52,7 +52,7 @@ export default Ember.Component.extend({
     // Cefpodoxime calculation
     if (this.fc.patient.weight.unit === 'kg') {
       dose = (this.fc.patient.weight.value * 10)/2;
-      if (dose > 200) {
+      if (dose >= 200) {
         this.set('cefpodoxime_dose', 200);
       }
       else {

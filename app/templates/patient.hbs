@@ -43,44 +43,19 @@
     <div class="col-md-1">
     </div>
     <div class="col-md-5">
-      <h3>Problem List</h3>
-
-      <div class="row bg-infolight-a">
-        <span class="patientspan">Hypertensive disorder
-          <div class="problembutton pull-right hidden">
-            <em>i</em>
-          </div>
-        </span>
+      <h3>Condition List</h3>
+      {{condition-list conditions=fc.patient.conditions index=0 highlight_color='bg-infolight-a'}}
+      {{condition-list conditions=fc.patient.conditions index=1 highlight_color='bg-infolight-b'}}
+      {{condition-list conditions=fc.patient.conditions index=2 highlight_color='bg-infolight-a'}}
+      {{condition-list conditions=fc.patient.conditions index=3 highlight_color='bg-infolight-b'}}
+      {{condition-list conditions=fc.patient.conditions index=4 highlight_color='bg-infolight-a'}}
+      <div class="row info">
+        {{#if fc.patient.conditions}}
+        Total Conditions: {{fc.patient.conditions.length}}
+        {{else}}
+        <p>No Documented Conditions</p>
+        {{/if}}
       </div>
-
-      <div class="row bg-infolight-b">
-        <span>Transformed migraine
-          <div class="problembutton pull-right hidden">
-            <em>i</em>
-          </div>
-        </span>
-      </div>
-
-      <div class="row bg-infolight-a">
-        <span>Hypercholesterolemia
-          <div class="problembutton pull-right hidden">
-            <em>i</em>
-          </div>
-        </span>
-      </div>
-
-      <div class="row">
-        <p class="lead">Non-Chronic</p>
-      </div>
-
-      <div class="row bg-infolight-b">
-        <span>Bacterial pneumonia
-          <div class="problembutton pull-right hidden">
-            <em>i</em>
-          </div>
-        </span>
-      </div>
-
     </div>
 
     <div class="col-md-1">
@@ -138,15 +113,18 @@
     </div>
     <div class="col-md-5">
       <h3>Allergies</h3>
-      {{#if fc.patient.hasPenicillinAllergy}}
-      <div class="row bg-infolight-b">
-        <strong>Penicillin</strong>
-      </div>
-      {{else}}
+      {{allergy-list allergies=fc.patient.allergies index=0 highlight_color='bg-infolight-b'}}
+      {{allergy-list allergies=fc.patient.allergies index=1 highlight_color='bg-infolight-a'}}
+      {{allergy-list allergies=fc.patient.allergies index=2 highlight_color='bg-infolight-b'}}
+      {{allergy-list allergies=fc.patient.allergies index=3 highlight_color='bg-infolight-a'}}
+      {{allergy-list allergies=fc.patient.allergies index=4 highlight_color='bg-infolight-b'}}
       <div class="row info">
-        No relevant allergies
+        {{#if fc.patient.allergies}}
+        Total Allergies: {{fc.patient.allergies.length}}
+        {{else}}
+        <p>No Allergy History</p>
+        {{/if}}
       </div>
-      {{/if}}
     </div>
   </div>
 </div>

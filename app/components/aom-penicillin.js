@@ -23,7 +23,7 @@ export default Ember.Component.extend({
   calculate_dose() {
     if (this.fc.patient.weight.unit === 'kg') {
       var dose = (this.fc.patient.weight.value * 85)/2;
-      if (dose > 2000) {
+      if (dose >= 2000) {
         this.set('dose', 2000);
       }
       else {
