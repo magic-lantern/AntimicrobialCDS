@@ -222,7 +222,6 @@ export default Ember.Service.extend({
     var self = this;
     self.getMedications('', function(r){
       self.set('patient.medications', r);
-      console.log('medications: ', self.get('patient.medications'));
     });
   },
   readAllergies: function() {
@@ -235,14 +234,12 @@ export default Ember.Service.extend({
     var self = this;
     self.getConditions('', function(r){
       self.set('patient.conditions', r);
-      console.log('conditions: ', self.get('patient.conditions'));
     });
   },
   readEncounters: function() {
     var self = this;
     self.getEncounters(function(r){
       self.set('patient.encounters', r);
-      console.log('encounters: ', self.get('patient.encounters'));
     });
   },
   addMedication: function(input) {
