@@ -27,7 +27,8 @@ module.exports = function(environment) {
       // 8462-4 - Diastolic Bloodpressure
       // 3141-9 - Weight
       // 8310-5 - Temperature
-      lab_exclusions: ['55284-4', '8480-6', '8462-4', '3141-9', '8310-5'],
+      // 8302-2 - Height
+      lab_exclusions: ['55284-4', '8480-6', '8462-4', '3141-9', '8310-5', '8302-2'],
       aom_temp_threshold: 39,
       strep_temp_threshold: 38,
     }

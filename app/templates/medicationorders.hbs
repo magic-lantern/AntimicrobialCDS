@@ -2,12 +2,18 @@
 {{#each fc.patient.medications as |med|}}
 <h4>{{med.display}} {{med.dosageInstruction}}</h4>
 <dl class="dl-horizontal">
+  {{#if med.duration_value}}
   <dt>Supply Duration</dt>
   <dd>{{med.duration_value}} {{med.duration_unit}}</dd>
+  {{/if}}
+  {{#if med.refills}}
   <dt>Refills</dt>
   <dd>{{med.refills}}</dd>
+  {{/if}}
+  {{#if med.date}}
   <dt>Prescribed</dt>
   <dd>{{med.date}}</dd>
+  {{/if}}
 </dl>
 {{else}}
   <p>No Medication History</p>

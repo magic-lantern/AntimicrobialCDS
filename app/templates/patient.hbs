@@ -18,6 +18,8 @@
     <div class="row zeroborder">
       <p class="lead">Recent Vitals</p>
       <dl class="dl-horizontal zeroborder">
+        <dt>Height</dt>
+        <dd>{{round fc.patient.height.value}} {{fc.patient.height.unit}} <span class="patientspan">{{fc.patient.height.date}}</span></dd>
         <dt>Weight</dt>
         <dd>{{round fc.patient.weight.value}} {{fc.patient.weight.unit}} <span class="patientspan">{{fc.patient.weight.date}}</span></dd>
         <dt>Temperature</dt>
@@ -34,6 +36,7 @@
     <div class="col-md-6 border">
       <h3>Reason for current visit</h3>
       <p>Unknown</p>
+      <p class="lead">Recent Patient Encounters</p>
     </div>
   </div>
 </div>
@@ -88,26 +91,12 @@
     <div class="col-md-1">
     </div>
     <div class="col-md-5">
-      <h3>Lab Results</h3>
-
-      <div class="row bg-infolight-a">
-        <span>
-          <strong>Triglycerides, Serum or Plasma</strong> 72 <span class="faded">Aug 12, 2015</span>
-          <div class="labbutton pull-right hidden">
-            <em>i</em>
-          </div>
-        </span>
-      </div>
-
-      <div class="row bg-infolight-b">
-        <span>
-          <strong>Stat Gram Stain</strong> +1 - click review for more details <span class="faded">Yesterday</span>
-          <div class="labbutton pull-right hidden">
-            <em>i</em>
-          </div>
-        </span>
-      </div>
-
+      <h3>Recent Lab Results</h3>
+      {{lab-list labs=fc.patient.labs index=0 highlight_color='bg-infolight-a'}}
+      {{lab-list labs=fc.patient.labs index=1 highlight_color='bg-infolight-b'}}
+      {{lab-list labs=fc.patient.labs index=2 highlight_color='bg-infolight-a'}}
+      {{lab-list labs=fc.patient.labs index=3 highlight_color='bg-infolight-b'}}
+      {{lab-list labs=fc.patient.labs index=4 highlight_color='bg-infolight-a'}}
     </div>
     <div class="col-md-1">
     </div>

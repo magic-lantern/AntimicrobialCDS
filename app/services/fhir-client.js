@@ -13,6 +13,7 @@ export default Ember.Service.extend({
     age_unit: 'years',
     temp: {},
     weight: {},
+    height: {},
     bloodpressure: {
       diastolic: {},
       systolic: {}
@@ -20,6 +21,7 @@ export default Ember.Service.extend({
     medications: [],
     allergies: [],
     conditions: [],
+    labs: [],
     hasPenicillinAllergy: null,
   },
   patientContext: null,
@@ -85,12 +87,14 @@ export default Ember.Service.extend({
               }
               self.set('patient.birthDate', p.birthDate);
               self.set('patient.gender', p.gender);
+              self.readHeight();
               self.readWeight();
               self.readTemp();
               self.readBP();
               self.readMedications();
               self.readAllergies();
               self.readConditions();
+              self.readLabs();
               clearTimeout(timeout);
               self.set('isLoading', false);
             });
@@ -125,6 +129,12 @@ export default Ember.Service.extend({
       self.patient.bloodpressure.systolic = r;
     });
   },
+  readHeight: function() {
+    var self = this;
+    self.getObservation('8302-2', function(r){
+      self.patient.height = r;
+    });
+  },
   getObservation: function(code, callback, count = 1) {
     var ret = {value: 'No Observation'};
 
@@ -156,10 +166,61 @@ export default Ember.Service.extend({
         }
     });
   },
+  readLabs: function() {
+    var self = this;
+    self.getObservations(function(r){
+      self.set('patient.labs', r);
+      console.log('labs: ', self.get('patient.labs'));
+      console.log('labs count', self.get('patient.labs').length);
+    });
+  },
+  getObservations: function(callback, count = 20) {
+    var ret = [];
+    Ember.$.when(this.patientContext.api.search({
+      'type': "Observation",
+      'query': {
+        '_sort:desc':'date'
+      },
+      'count': count}))
+      .done(function(observations) {
+        console.log('170 observations: ', observations);
+        if (!Ember.isNone(observations.data.entry)) {
+          observations.data.entry.forEach(function(obs) {
+            var o = obs.resource;
+            // since the search doesn't seem to filter out values, filter client side
+            if(ENV.APP.lab_exclusions.indexOf(o.code.coding[0].code) < 0) {
+              if (o.hasOwnProperty('effectiveDateTime')) {
+                var r = {};
+                r.date = o.effectiveDateTime;
+                r.code = o.code.coding[0].code;
+                r.display = o.code.coding[0].display;
+                if (o.hasOwnProperty('valueQuantity') &&
+                    o.valueQuantity.hasOwnProperty('value') &&
+                    o.valueQuantity.hasOwnProperty('unit')) {
+                  r.value = o.valueQuantity.value;
+                  r.unit = o.valueQuantity.unit;
+                }
+                else if (o.hasOwnProperty('valueString')){
+                  r.value = o.valueString;
+                }
+                ret.push(r);
+              }
+              else {
+                console.log("fhir-client - expected properties missing for observation ", obs);
+              }
+            }
+          });
+        }
+        if (typeof callback === 'function') {
+          callback(ret);
+        }
+    });
+  },
   readMedications: function() {
     var self = this;
     self.getMedications('', function(r){
       self.set('patient.medications', r);
+      console.log('medications: ', self.get('patient.medications'));
     });
   },
   readAllergies: function() {
@@ -188,12 +249,31 @@ export default Ember.Service.extend({
   },
   getMedications: function(code, callback, count = 20) {
     var ret = [];
-    Ember.$.when(this.patientContext.api.search({
-      'type': "MedicationOrder",
-      // 'query': {
-      //   'code': code,
-      //   '_sort:desc':'date'},
-      'count': count}))
+    var search = {};
+    if (!Ember.isEmpty(code)) {
+      search = {
+        'type': "MedicationOrder",
+        'query': {
+          'code': code,
+           '_sort:desc':'_id'},
+        // this field isn't populated at least for some patients in HSPC DSTU2 Sandbox
+        // however, datewritten should be the way to sort medications (rather than id)
+        //'_sort:desc':'datewritten',
+        'count': count
+      };
+    }
+    else {
+      search = {
+        'type': "MedicationOrder",
+        'query': {
+           '_sort:desc':'_id'},
+        // this field isn't populated at least for some patients in HSPC DSTU2 Sandbox
+        // however, datewritten should be the way to sort medications (rather than id)
+        //'_sort:desc':'datewritten',
+        'count': count
+      };
+    }
+    Ember.$.when(this.patientContext.api.search(search))
       .done(function(medications) {
         console.log('medications: ', medications);
         if (!Ember.isNone(medications.data.entry)) {
@@ -228,9 +308,9 @@ export default Ember.Service.extend({
     var ret = [];
     Ember.$.when(this.patientContext.api.search({
       'type': "Condition",
-      // 'query': {
+      'query': {
       //   'code': code,
-      //   '_sort:desc':'onsetDateTime'},
+         '_sort:desc':'onset'},
       'count': count}))
       .done(function(conditions) {
         console.log('conditions: ', conditions);
@@ -253,9 +333,9 @@ export default Ember.Service.extend({
     var ret = [];
     Ember.$.when(this.patientContext.api.search({
       'type': "AllergyIntolerance",
-      // 'query': {
+      'query': {
       //   'code': code,
-      //   '_sort:desc':'date'},
+        '_sort:desc':'date'},
       'count': count}))
       .done(function(allergies) {
         console.log('allergies: ', allergies);
