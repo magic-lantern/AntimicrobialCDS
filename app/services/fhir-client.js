@@ -22,6 +22,7 @@ export default Ember.Service.extend({
     allergies: [],
     conditions: [],
     labs: [],
+    encounters: [],
     hasPenicillinAllergy: null,
   },
   patientContext: null,
@@ -95,6 +96,7 @@ export default Ember.Service.extend({
               self.readAllergies();
               self.readConditions();
               self.readLabs();
+              self.readEncounters();
               clearTimeout(timeout);
               self.set('isLoading', false);
             });
@@ -236,6 +238,13 @@ export default Ember.Service.extend({
       console.log('conditions: ', self.get('patient.conditions'));
     });
   },
+  readEncounters: function() {
+    var self = this;
+    self.getEncounters(function(r){
+      self.set('patient.encounters', r);
+      console.log('encounters: ', self.get('patient.encounters'));
+    });
+  },
   addMedication: function(input) {
     var m = {};
     m.display = input.display;
@@ -357,6 +366,33 @@ export default Ember.Service.extend({
         }
     });
   },
+  getEncounters: function(callback, count = 20) {
+    var ret = [];
+    Ember.$.when(this.patientContext.api.search({
+      'type': "Encounter",
+      'query': {
+        '_sort:desc':'date'},
+      'count': count}))
+      .done(function(encounters) {
+        console.log('encounters: ', encounters);
+        if (!Ember.isNone(encounters.data.entry)) {
+          encounters.data.entry.forEach(function(encounter) {
+            var e = encounter.resource;
+            var r = {};
+            r.class = e.class;
+            r.text = e.text.div.replace('<div xmlns="http://www.w3.org/1999/xhtml">', '')
+              .replace('</div>', '')
+              .replace(e.period.start + ': ', '');
+            r.start = e.period.start;
+            r.end = e.period.end;
+            ret.push(r);
+          });
+        }
+        if (typeof callback === 'function') {
+          callback(ret);
+        }
+    });
+  },
   loadPatient: function(patient) {
     if(patient === 'demo') {
       var date = moment().format(ENV.APP.date_format);
@@ -368,6 +404,11 @@ export default Ember.Service.extend({
         value: 18,
         date: date,
         unit: 'kg'
+      });
+      this.set('patient.height', {
+        value: 128,
+        date: date,
+        unit: 'cm'
       });
       this.set('patient.temp', {
         value: 40,

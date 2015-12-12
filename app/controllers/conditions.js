@@ -10,14 +10,19 @@ export default Ember.Controller.extend({
         if (ENV.APP.aom_cds.indexOf(diagnosis) > -1) {
           console.log("need to fire AOM CDS");
           Ember.$('#AOMModal').modal('show');
+          Ember.$('#aom-education').removeClass('hidden');
+          Ember.$('#strep-education').addClass('hidden');
         }
         else if (ENV.APP.strep_cds.indexOf(diagnosis) > -1) {
           console.log("need to fire Strep CDS");
           Ember.$('#StrepModal').modal('show');
+          Ember.$('#strep-education').removeClass('hidden');
+          Ember.$('#aom-education').addClass('hidden');
         }
         else {
           console.log("unknown SNOMED-CT code.");
         }
+        Ember.$('#general-education').removeClass('hidden');
       }
     },
     medication_callback: function(med) {

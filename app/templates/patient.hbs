@@ -37,6 +37,14 @@
       <h3>Reason for current visit</h3>
       <p>Unknown</p>
       <p class="lead">Recent Patient Encounters</p>
+      {{encounter-list encounters=fc.patient.encounters index=0}}
+      {{encounter-list encounters=fc.patient.encounters index=1}}
+      {{encounter-list encounters=fc.patient.encounters index=2}}
+      {{encounter-list encounters=fc.patient.encounters index=3}}
+      {{encounter-list encounters=fc.patient.encounters index=4}}
+      {{#unless fc.patient.encounters}}
+      <p>No Recent Encounters</p>
+      {{/unless}}
     </div>
   </div>
 </div>
@@ -97,6 +105,11 @@
       {{lab-list labs=fc.patient.labs index=2 highlight_color='bg-infolight-a'}}
       {{lab-list labs=fc.patient.labs index=3 highlight_color='bg-infolight-b'}}
       {{lab-list labs=fc.patient.labs index=4 highlight_color='bg-infolight-a'}}
+      <div class="row info">
+        {{#unless fc.patient.labs}}
+        <p>No Recent Labs</p>
+        {{/unless}}
+      </div>
     </div>
     <div class="col-md-1">
     </div>
