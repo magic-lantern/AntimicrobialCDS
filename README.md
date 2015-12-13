@@ -1,6 +1,24 @@
 # AntimicrobialCDS
 Antimicrobial Clinical Decision Support Prototype
 
+The overprescribing of antibiotics is a broad collection of issues that cannot
+be solved easily at once. In order to quickly provide a measurable solution to
+the problem we propose to create a limited scope Clinical Decision Support
+system (CDSS) to make antibiotic recommendations for pediatric patients for
+acute otitis media (AOM) and streptococcal pharyngitis.
+
+This prototype system provides antibiotic recommendations for pediatric
+populations. The recommendation will include which antibiotic(s)
+to prescribe, dosage, and length of treatment based on patient specific
+values.
+
+Technologies employed:
+* [EmberJS](http://emberjs.com/)
+* [Bootstrap](http://getbootstrap.com/)
+* [Font Awesome](https://fortawesome.github.io/Font-Awesome/)
+* [FHIR](https://www.hl7.org/fhir/)
+* [SMART on FHIR](http://smarthealthit.org/)
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
