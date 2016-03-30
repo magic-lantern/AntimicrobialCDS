@@ -66,8 +66,9 @@ export default Ember.Service.extend({
     // this line prevents the addition of a timestamp to the fhir-client.js file
     Ember.$.ajaxSetup({cache: true});
     // calling this creates the global FHIR object
-    Ember.$.getScript("https://sandbox.hspconsortium.org/dstu2/fhir-client/fhir-client.js")
-    //Ember.$.getScript("/js/fhir-client.js")
+    // it appears that hspc is no longer hosting this file
+    //   Ember.$.getScript("https://sandbox.hspconsortium.org/dstu2/fhir-client/fhir-client.js")
+    Ember.$.getScript("/js/fhir-client.js")
     .done(function() {
       FHIR.oauth2.ready(function (fhirclient) {
         self.set('isAuthenticated', true);
