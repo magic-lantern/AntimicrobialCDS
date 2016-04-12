@@ -1,28 +1,28 @@
 <p>To use the applciation, please do the following:</p>
 <ol>
-  <li>Open <a href="https://sandbox.hspconsortium.org/dstu2/demo" target="_blank">HSPC DSTU2 Sandbox: https://sandbox.hspconsortium.org/dstu2/demo</a></li>
-  <li>Select sign in the upper right as shown in this image below:
-    <img class="img-responsive img-rounded" src="images/start.png">
+  <li>Open <a href="https://sandbox.hspconsortium.org/" target="_blank">HSPC DSTU2 Sandbox: https://sandbox.hspconsortium.org/</a></li>
+  <li>Login, or if you do not yet have an account create a new account. The Demo account does not allow launching of custom applications.
+    <img class="img-responsive img-rounded" src="images/hspc_login.png">
   </li>
-  <li>Use username of "demo" and password of "demo" – or setup your own account.
-    <img class="img-responsive img-rounded" src="images/login.png">
+  <li>Create a new "launch scenario" to open the desired application from the desired context with the desired patient. Select "As Practitioner":
+    <img class="img-responsive img-rounded" src="images/create_new_launch_scenario.png">
   </li>
-  <li>Select desired pediatric patient (under age 19):
+  <li>Select desired practitioner such as "Demo Demo MD":
+    <img class="img-responsive img-rounded" src="images/select_desired_practitioner.png">
+  </li>
+  <li>Select desired pediatric patient (under age 19), then click "Select this Patient" on the right:
     <img class="img-responsive img-rounded" src="images/patient_selection.png">
   </li>
-  <li>In "Custom App" region on the right, select the App_ID field and type "bmi6300_antimicrobial"
+  <li>In "Custom App" at the bottom right, select the App ID field and type "bmi6300_antimicrobial"
      and in the Launch URL field, type "http://cds-magiclantern.rhcloud.com/launch.html" Then click
       "Custom App" to launch the application.
     <img class="img-responsive img-rounded" src="images/application_launch.png">
   </li>
-  <li>You will then be redirected to the OpenID application authorization page to allow a
-    single sign on token to be created. In the "Remember this decision:" section, select the desired time
-    such as "remember this decision for one hour" and click "Authorize".
-    <img class="img-responsive img-rounded" src="images/openID_approval.png">
+  <li>A save dialog appears - saving the launch scenario is recommended if going to use this applicaiton again. If you don't want to save, just click 'Launch'
+    <img class="img-responsive img-rounded" src="images/save_application_launch.png">
   </li>
-  <li>If you want to revoke the single sign on token visit this page:
-    <a href="https://sandbox.hspconsortium.org/dstu2/hsp-reference-authorization/manage/user/approved" target="_blank">
-      Manage Approved Sites: https://sandbox.hspconsortium.org/dstu2/hsp-reference-authorization/manage/user/approved</a>
+  <li>If you did save, you will be brought back to the begining and need to select the desired scenario and then click "Luanch" at the bottom right.
+    <img class="img-responsive img-rounded" src="images/final_launch.png">
   </li>
 </ol>
 
